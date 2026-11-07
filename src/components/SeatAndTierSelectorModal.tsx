@@ -67,7 +67,7 @@ export default function SeatAndTierSelectorModal({
         alignItems: 'center',
         justifyContent: 'center',
         padding: '16px',
-        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        backgroundColor: 'var(--modal-overlay)',
         backdropFilter: 'blur(10px)',
       }}
       onClick={(e) => {
@@ -213,9 +213,9 @@ export default function SeatAndTierSelectorModal({
                           background: isSelected
                             ? 'var(--color-champagne)'
                             : isReserved
-                            ? '#374151'
+                            ? 'var(--color-disabled-seat)'
                             : 'var(--color-stone)',
-                          color: isSelected ? '#111' : isReserved ? '#9ca3af' : 'var(--color-text)',
+                          color: isSelected ? '#FFFFFF' : isReserved ? 'var(--color-disabled-text)' : 'var(--color-text)',
                           fontSize: '0.72rem',
                           fontWeight: 600,
                           cursor: isReserved ? 'not-allowed' : 'pointer',
@@ -259,7 +259,7 @@ export default function SeatAndTierSelectorModal({
               <span>Selected ({selectedSeats.length})</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ width: '16px', height: '16px', borderRadius: '4px', background: '#374151' }} />
+              <span style={{ width: '16px', height: '16px', borderRadius: '4px', background: 'var(--color-disabled-seat)' }} />
               <span>Sold Out</span>
             </div>
           </div>

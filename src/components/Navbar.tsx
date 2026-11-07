@@ -94,28 +94,28 @@ export default function Navbar({
             gap: '28px',
           }}
         >
-          <button type="button" onClick={() => scrollToSection('artist-bio')} style={navLinkStyle}>
+          <button type="button" className="nav-link" onClick={() => scrollToSection('artist-bio')} style={navLinkStyle}>
             Artist
           </button>
-          <button type="button" onClick={() => scrollToSection('discography')} style={navLinkStyle}>
+          <button type="button" className="nav-link" onClick={() => scrollToSection('discography')} style={navLinkStyle}>
             Discography
           </button>
-          <button type="button" onClick={() => scrollToSection('tour-dates')} style={navLinkStyle}>
+          <button type="button" className="nav-link" onClick={() => scrollToSection('tour-dates')} style={navLinkStyle}>
             Tour Dates
           </button>
-          <button type="button" onClick={() => scrollToSection('gallery')} style={navLinkStyle}>
+          <button type="button" className="nav-link" onClick={() => scrollToSection('gallery')} style={navLinkStyle}>
             Gallery
           </button>
-          <button type="button" onClick={() => scrollToSection('live-stream')} style={navLinkStyle}>
+          <button type="button" className="nav-link" onClick={() => scrollToSection('live-stream')} style={navLinkStyle}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
               <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#E53E3E' }} />
               Live Broadcast
             </span>
           </button>
-          <button type="button" onClick={() => scrollToSection('press')} style={navLinkStyle}>
+          <button type="button" className="nav-link" onClick={() => scrollToSection('press')} style={navLinkStyle}>
             Press
           </button>
-          <button type="button" onClick={() => scrollToSection('booking')} style={navLinkStyle}>
+          <button type="button" className="nav-link" onClick={() => scrollToSection('booking')} style={navLinkStyle}>
             Booking
           </button>
         </nav>

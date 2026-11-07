@@ -115,7 +115,7 @@ export default function MultiStepCheckoutModal({
         alignItems: 'center',
         justifyContent: 'center',
         padding: '16px',
-        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        backgroundColor: 'var(--modal-overlay)',
         backdropFilter: 'blur(10px)',
       }}
       onClick={(e) => {

@@ -6,30 +6,43 @@
   --color-surface-elevated: #FAF8F5;
 
   --color-text-primary: #1C1D1B;
-  --color-text-secondary: #696B68;
-  --color-text-muted: #8E908C;
+  --color-text-secondary: #4A4D48;
+  --color-text-muted: #72756E;
 
-  --color-accent: #B99A70;
-  --color-accent-deep: #92704C;
-  --color-accent-subtle: rgba(185, 154, 112, 0.12);
-  --color-accent-hover: #A8865C;
+  --color-accent: #8E6534;
+  --color-accent-deep: #744D20;
+  --color-accent-subtle: rgba(142, 101, 52, 0.12);
+  --color-accent-hover: #5F3D18;
 
-  --color-border: #DED8CE;
-  --color-border-subtle: rgba(222, 216, 206, 0.6);
-  --color-border-strong: #C4BCB0;
+  --color-border: #D8D1C3;
+  --color-border-subtle: rgba(216, 209, 195, 0.7);
+  --color-border-strong: #B5AB99;
 
-  --color-success: #52745F;
-  --color-success-bg: rgba(82, 116, 95, 0.12);
-  --color-error: #A84F43;
-  --color-error-bg: rgba(168, 79, 67, 0.12);
+  /* Direct Semantic Aliases for Components */
+  --color-bg: #F6F3ED;
+  --color-text: #1C1D1B;
+  --color-stone: #EEE7DC;
+  --color-stone-muted: #E5DEC0;
+  --color-champagne: #8E6534;
+  --color-disabled-seat: #E2DBD0;
+  --color-disabled-text: #968F83;
+  --modal-overlay: rgba(28, 29, 27, 0.52);
 
-  --gradient-champagne: linear-gradient(135deg, #D7C09B 0%, #A8865C 100%);
+  --color-success: #2E6342;
+  --color-success-bg: rgba(46, 99, 66, 0.12);
+  --color-error: #A83B2D;
+  --color-error-bg: rgba(168, 59, 45, 0.12);
+
+  --gradient-champagne: linear-gradient(135deg, #C29E6F 0%, #8E6534 100%);
   --gradient-editorial: linear-gradient(145deg, #F6F3ED 0%, #E8E1D7 100%);
-  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #FBF9F6 100%);
+  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #FAF8F4 100%);
 
-  --shadow-card: 0 12px 35px rgba(28, 29, 27, 0.055);
-  --shadow-elevated: 0 24px 65px rgba(28, 29, 27, 0.10);
-  --shadow-modal: 0 32px 80px rgba(28, 29, 27, 0.22);
+  --shadow-card: 0 4px 20px rgba(28, 29, 27, 0.06), 0 1px 3px rgba(28, 29, 27, 0.04);
+  --shadow-elevated: 0 16px 40px rgba(28, 29, 27, 0.09), 0 2px 6px rgba(28, 29, 27, 0.04);
+  --shadow-modal: 0 28px 75px rgba(28, 29, 27, 0.20), 0 4px 12px rgba(28, 29, 27, 0.08);
+  --shadow-sm: var(--shadow-card);
+  --shadow-md: var(--shadow-elevated);
+  --shadow-lg: var(--shadow-modal);
 
   /* Typography */
   --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
@@ -80,19 +93,19 @@
   --muted-surface: var(--color-surface-muted);
   --font-heading: var(--font-display);
 
-  --status-open-bg: rgba(82, 116, 95, 0.12);
-  --status-open-text: #3D5947;
-  --status-closing-bg: rgba(185, 154, 112, 0.16);
-  --status-closing-text: #8A683E;
-  --status-closed-bg: #EAE8E3;
-  --status-closed-text: #787A76;
+  --status-open-bg: rgba(46, 99, 66, 0.12);
+  --status-open-text: #225134;
+  --status-closing-bg: rgba(142, 101, 52, 0.14);
+  --status-closing-text: #6B491E;
+  --status-closed-bg: #EAE6DE;
+  --status-closed-text: #595B56;
 
   --error-bg: var(--color-error-bg);
   --error-text: var(--color-error);
-  --error-border: rgba(168, 79, 67, 0.3);
+  --error-border: rgba(168, 66, 52, 0.3);
   --success-bg: var(--color-success-bg);
   --success-text: var(--color-success);
-  --success-border: rgba(82, 116, 95, 0.3);
+  --success-border: rgba(61, 107, 78, 0.3);
 }
 
 [data-theme="dark"] {
@@ -114,6 +127,16 @@
   --color-border-subtle: rgba(55, 57, 52, 0.6);
   --color-border-strong: #4E524A;
 
+  /* Direct Semantic Aliases for Dark Theme */
+  --color-bg: #111312;
+  --color-text: #F4F0E8;
+  --color-stone: #242724;
+  --color-stone-muted: #1E211E;
+  --color-champagne: #C6A77C;
+  --color-disabled-seat: #2C302C;
+  --color-disabled-text: #666A63;
+  --modal-overlay: rgba(0, 0, 0, 0.80);
+
   --color-success: #6E9B7E;
   --color-success-bg: rgba(110, 155, 126, 0.15);
   --color-error: #CF6A5D;
@@ -126,6 +149,9 @@
   --shadow-card: 0 12px 35px rgba(0, 0, 0, 0.28);
   --shadow-elevated: 0 24px 65px rgba(0, 0, 0, 0.42);
   --shadow-modal: 0 32px 80px rgba(0, 0, 0, 0.75);
+  --shadow-sm: var(--shadow-card);
+  --shadow-md: var(--shadow-elevated);
+  --shadow-lg: var(--shadow-modal);
 
   --bg-primary: var(--color-background);
   --bg-secondary: var(--color-surface);

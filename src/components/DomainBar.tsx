@@ -74,20 +74,13 @@ export default function DomainBar({
                 key={dom.id}
                 type="button"
                 onClick={() => onSelectDomain(dom.id)}
+                className={`domain-tab-btn ${isActive ? 'is-active' : ''}`}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  padding: '12px 18px',
-                  borderRadius: '10px',
                   border: isActive ? '2px solid var(--color-champagne)' : '1px solid var(--color-border)',
                   background: isActive ? 'var(--color-stone)' : 'var(--color-bg)',
                   color: isActive ? 'var(--color-text)' : 'var(--color-text-secondary)',
                   fontWeight: isActive ? 700 : 500,
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.18s ease',
-                  boxShadow: isActive ? '0 4px 14px rgba(185, 154, 112, 0.2)' : 'none',
+                  boxShadow: isActive ? '0 4px 14px rgba(142, 101, 52, 0.2)' : 'none',
                 }}
               >
                 <span
@@ -150,7 +143,6 @@ export default function DomainBar({
               background: 'var(--color-bg)',
               color: 'var(--color-text)',
               fontSize: '0.86rem',
-              outline: 'none',
             }}
           />
         </div>

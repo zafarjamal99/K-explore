@@ -149,7 +149,7 @@ export default function AdminDashboard({
         alignItems: 'center',
         justifyContent: 'center',
         padding: '16px',
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        backgroundColor: 'var(--modal-overlay)',
         backdropFilter: 'blur(10px)',
       }}
       onClick={(e) => {

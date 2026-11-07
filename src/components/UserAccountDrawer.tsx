@@ -31,8 +31,8 @@ export default function UserAccountDrawer({
         zIndex: 9999,
         display: 'flex',
         justifyContent: 'flex-end',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        backdropFilter: 'blur(6px)',
+        backgroundColor: 'var(--modal-overlay)',
+        backdropFilter: 'blur(8px)',
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();

@@ -63,8 +63,8 @@ export default function TicketRsvpModal({
         alignItems: 'center',
         justifyContent: 'center',
         padding: '16px',
-        backgroundColor: 'rgba(0, 0, 0, 0.75)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: 'var(--modal-overlay)',
+        backdropFilter: 'blur(10px)',
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -80,7 +80,7 @@ export default function TicketRsvpModal({
           overflowY: 'auto',
           borderRadius: '16px',
           border: '1px solid var(--color-champagne)',
-          boxShadow: '0 24px 64px rgba(0, 0, 0, 0.45)',
+          boxShadow: 'var(--shadow-modal)',
           padding: '0',
           animation: 'fadeIn 0.25s ease-out',
         }}
