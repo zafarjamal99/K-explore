@@ -31,7 +31,6 @@ export default function EventDetailsModal({
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-    // Lock scroll on background
     document.body.style.overflow = 'hidden';
 
     return () => {
@@ -45,15 +44,15 @@ export default function EventDetailsModal({
   const handleShare = () => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(window.location.href);
-      showToast?.('Event link copied to clipboard!', 'success');
+      showToast?.('Event link copied to clipboard.', 'success');
     } else {
-      showToast?.('Share this event with your friends: ' + event.title, 'info');
+      showToast?.('Share this event: ' + event.title, 'info');
     }
   };
 
   const handleCalendarExport = () => {
     downloadCalendarEvent(event);
-    showToast?.('Downloaded .ics calendar file for this event.', 'success');
+    showToast?.('Exported .ics calendar file.', 'success');
   };
 
   return (
@@ -71,8 +70,8 @@ export default function EventDetailsModal({
         <div
           style={{
             position: 'relative',
-            height: '280px',
-            backgroundColor: 'var(--muted-surface)',
+            height: '300px',
+            backgroundColor: 'var(--color-surface-muted)',
           }}
         >
           <img
@@ -87,6 +86,7 @@ export default function EventDetailsModal({
               width: '100%',
               height: '100%',
               objectFit: 'cover',
+              filter: 'brightness(0.92)',
             }}
           />
 
@@ -97,48 +97,50 @@ export default function EventDetailsModal({
             aria-label="Close event details"
             style={{
               position: 'absolute',
-              top: '16px',
-              right: '16px',
+              top: '18px',
+              right: '18px',
               width: '38px',
               height: '38px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(25, 27, 31, 0.75)',
-              color: '#FFFFFF',
+              borderRadius: 'var(--radius-sm)',
+              backgroundColor: 'rgba(28, 29, 27, 0.75)',
+              color: '#F4F0E8',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               border: 'none',
               cursor: 'pointer',
               backdropFilter: 'blur(6px)',
-              transition: 'background var(--transition-fast)',
+              transition: 'background var(--motion-fast) ease',
             }}
           >
-            <X size={20} />
+            <X size={18} />
           </button>
 
           {/* Category Tag */}
           <div
             style={{
               position: 'absolute',
-              bottom: '16px',
-              left: '20px',
-              backgroundColor: 'rgba(25, 27, 31, 0.85)',
+              bottom: '18px',
+              left: '24px',
+              backgroundColor: 'rgba(28, 29, 27, 0.85)',
               backdropFilter: 'blur(8px)',
-              color: '#FFFFFF',
-              fontSize: '0.8125rem',
+              color: '#F4F0E8',
+              fontSize: '0.75rem',
               fontWeight: 600,
               padding: '6px 14px',
-              borderRadius: 'var(--radius-pill)',
+              borderRadius: 'var(--radius-sm)',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
             }}
           >
             {event.category}
           </div>
         </div>
 
-        {/* Modal Content Body */}
-        <div style={{ padding: '28px 24px 36px 24px' }}>
-          {/* Header Row: Title & Status */}
-          <div style={{ marginBottom: '20px' }}>
+        {/* Content Body */}
+        <div style={{ padding: '32px 32px 40px 32px' }}>
+          {/* Header Row */}
+          <div style={{ marginBottom: '24px' }}>
             <div
               style={{
                 display: 'flex',
@@ -159,32 +161,33 @@ export default function EventDetailsModal({
               {isRegistered && (
                 <span
                   style={{
-                    backgroundColor: 'var(--success-bg)',
-                    color: 'var(--success-text)',
-                    border: '1px solid var(--success-border)',
-                    borderRadius: 'var(--radius-pill)',
+                    backgroundColor: 'var(--color-surface)',
+                    color: 'var(--color-success)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-sm)',
                     padding: '4px 12px',
                     fontSize: '0.75rem',
-                    fontWeight: 700,
+                    fontWeight: 600,
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '4px',
+                    boxShadow: 'var(--shadow-card)',
                   }}
                 >
-                  <CheckCircle2 size={14} /> You are registered
+                  <CheckCircle2 size={13} /> You are registered
                 </span>
               )}
 
               <span
                 style={{
                   fontSize: '0.8125rem',
-                  color: 'var(--secondary-text)',
+                  color: 'var(--color-text-muted)',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '4px',
                 }}
               >
-                <Users size={14} />
+                <Users size={13} />
                 {event.registeredCount} / {event.totalSeats} Registered
               </span>
             </div>
@@ -192,10 +195,11 @@ export default function EventDetailsModal({
             <h2
               id="modal-event-title"
               style={{
-                fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                fontWeight: 800,
-                color: 'var(--primary-text)',
-                lineHeight: 1.25,
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(1.75rem, 3.5vw, 2.6rem)',
+                fontWeight: 400,
+                color: 'var(--color-text-primary)',
+                lineHeight: 1.12,
               }}
             >
               {event.title}
@@ -208,11 +212,11 @@ export default function EventDetailsModal({
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
               gap: '14px',
-              backgroundColor: 'var(--muted-surface)',
-              borderRadius: 'var(--radius-lg)',
-              padding: '16px 20px',
+              backgroundColor: 'var(--color-surface-elevated)',
+              borderRadius: 'var(--radius-md)',
+              padding: '18px 22px',
               marginBottom: '28px',
-              border: '1px solid var(--border)',
+              border: '1px solid var(--color-border)',
             }}
           >
             <div>
@@ -221,17 +225,18 @@ export default function EventDetailsModal({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
-                  fontSize: '0.75rem',
+                  fontSize: '0.72rem',
                   textTransform: 'uppercase',
                   fontWeight: 600,
-                  color: 'var(--secondary-text)',
+                  letterSpacing: '0.08em',
+                  color: 'var(--color-text-muted)',
                   marginBottom: '4px',
                 }}
               >
-                <Calendar size={14} style={{ color: 'var(--accent)' }} />
-                Date & Time
+                <Calendar size={13} style={{ color: 'var(--color-accent)' }} />
+                Schedule
               </div>
-              <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--primary-text)' }}>
+              <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                 {event.displayDate}
               </div>
             </div>
@@ -242,20 +247,21 @@ export default function EventDetailsModal({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
-                  fontSize: '0.75rem',
+                  fontSize: '0.72rem',
                   textTransform: 'uppercase',
                   fontWeight: 600,
-                  color: 'var(--secondary-text)',
+                  letterSpacing: '0.08em',
+                  color: 'var(--color-text-muted)',
                   marginBottom: '4px',
                 }}
               >
-                <MapPin size={14} style={{ color: 'var(--primary-brand)' }} />
+                <MapPin size={13} style={{ color: 'var(--color-accent-deep)' }} />
                 Venue Location
               </div>
-              <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--primary-text)' }}>
+              <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                 {event.venue}
               </div>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)' }}>
+              <div style={{ fontSize: '0.78125rem', color: 'var(--color-text-secondary)' }}>
                 {event.campusLocation}
               </div>
             </div>
@@ -266,17 +272,18 @@ export default function EventDetailsModal({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
-                  fontSize: '0.75rem',
+                  fontSize: '0.72rem',
                   textTransform: 'uppercase',
                   fontWeight: 600,
-                  color: 'var(--secondary-text)',
+                  letterSpacing: '0.08em',
+                  color: 'var(--color-text-muted)',
                   marginBottom: '4px',
                 }}
               >
-                <Clock size={14} style={{ color: 'var(--accent)' }} />
-                Deadline
+                <Clock size={13} style={{ color: 'var(--color-accent)' }} />
+                Admission
               </div>
-              <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--primary-text)' }}>
+              <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                 {event.fee}
               </div>
             </div>
@@ -285,10 +292,10 @@ export default function EventDetailsModal({
           {/* Countdown Section */}
           <div
             style={{
-              padding: '16px 20px',
-              backgroundColor: 'var(--bg-secondary)',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-lg)',
+              padding: '18px 22px',
+              backgroundColor: 'var(--color-surface)',
+              border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-md)',
               marginBottom: '28px',
             }}
           >
@@ -297,13 +304,13 @@ export default function EventDetailsModal({
 
           {/* Detailed Description */}
           <div style={{ marginBottom: '28px' }}>
-            <h3 style={{ fontSize: '1.1875rem', marginBottom: '12px', fontWeight: 700 }}>
+            <h3 style={{ fontSize: '1.25rem', marginBottom: '12px', fontWeight: 500 }}>
               About this Event
             </h3>
             <div
               style={{
                 fontSize: '0.9625rem',
-                color: 'var(--secondary-text)',
+                color: 'var(--color-text-secondary)',
                 lineHeight: 1.7,
                 whiteSpace: 'pre-line',
               }}
@@ -312,19 +319,19 @@ export default function EventDetailsModal({
             </div>
           </div>
 
-          {/* Agenda Timeline if available */}
+          {/* Agenda Timeline */}
           {event.agenda && event.agenda.length > 0 && (
             <div style={{ marginBottom: '28px' }}>
-              <h3 style={{ fontSize: '1.1875rem', marginBottom: '14px', fontWeight: 700 }}>
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '16px', fontWeight: 500 }}>
                 Program Agenda & Schedule
               </h3>
               <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '12px',
-                  borderLeft: '2px solid var(--border)',
-                  paddingLeft: '16px',
+                  gap: '14px',
+                  borderLeft: '1px solid var(--color-border)',
+                  paddingLeft: '18px',
                   marginLeft: '8px',
                 }}
               >
@@ -333,19 +340,19 @@ export default function EventDetailsModal({
                     <div
                       style={{
                         position: 'absolute',
-                        left: '-22px',
-                        top: '5px',
-                        width: '10px',
-                        height: '10px',
+                        left: '-23px',
+                        top: '6px',
+                        width: '9px',
+                        height: '9px',
                         borderRadius: '50%',
-                        backgroundColor: 'var(--accent)',
+                        backgroundColor: 'var(--color-accent)',
                       }}
                     />
                     <div
                       style={{
-                        fontSize: '0.8125rem',
-                        fontWeight: 700,
-                        color: 'var(--accent)',
+                        fontSize: '0.78125rem',
+                        fontWeight: 600,
+                        color: 'var(--color-accent-deep)',
                         marginBottom: '2px',
                       }}
                     >
@@ -355,7 +362,7 @@ export default function EventDetailsModal({
                       style={{
                         fontSize: '0.9375rem',
                         fontWeight: 600,
-                        color: 'var(--primary-text)',
+                        color: 'var(--color-text-primary)',
                       }}
                     >
                       {item.title}
@@ -366,14 +373,14 @@ export default function EventDetailsModal({
             </div>
           )}
 
-          {/* Speaker / Curator Spotlight */}
+          {/* Speaker Spotlight */}
           {event.speaker && (
             <div
               style={{
-                padding: '18px 20px',
-                backgroundColor: 'var(--muted-surface)',
-                borderRadius: 'var(--radius-lg)',
-                border: '1px solid var(--border)',
+                padding: '20px 22px',
+                backgroundColor: 'var(--color-surface-elevated)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--color-border)',
                 marginBottom: '28px',
                 display: 'flex',
                 alignItems: 'flex-start',
@@ -382,39 +389,31 @@ export default function EventDetailsModal({
             >
               <div
                 style={{
-                  width: '46px',
-                  height: '46px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--primary-brand)',
-                  color: '#FFFFFF',
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: 'var(--radius-sm)',
+                  backgroundColor: 'var(--color-text-primary)',
+                  color: 'var(--color-background)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   flexShrink: 0,
                 }}
               >
-                <User size={22} />
+                <User size={20} />
               </div>
               <div>
-                <div
-                  style={{
-                    fontSize: '0.75rem',
-                    textTransform: 'uppercase',
-                    fontWeight: 700,
-                    letterSpacing: '0.04em',
-                    color: 'var(--accent)',
-                  }}
-                >
-                  Featured Speaker / Judge
-                </div>
-                <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--primary-text)' }}>
+                <span className="eyebrow" style={{ marginBottom: '4px', fontSize: '0.6875rem' }}>
+                  FEATURED CURATOR / SPEAKER
+                </span>
+                <div style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                   {event.speaker.name}
                 </div>
-                <div style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)', fontWeight: 500 }}>
+                <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
                   {event.speaker.role}
                 </div>
                 {event.speaker.bio && (
-                  <p style={{ fontSize: '0.8125rem', marginTop: '6px', color: 'var(--secondary-text)' }}>
+                  <p style={{ fontSize: '0.8125rem', marginTop: '6px', color: 'var(--color-text-secondary)' }}>
                     {event.speaker.bio}
                   </p>
                 )}
@@ -431,52 +430,50 @@ export default function EventDetailsModal({
               marginBottom: '32px',
             }}
           >
-            {/* Organizer */}
             <div
               style={{
-                padding: '16px',
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--radius-md)',
+                padding: '18px',
+                border: '1px solid var(--color-border)',
+                borderRadius: 'var(--radius-sm)',
               }}
             >
-              <h4 style={{ fontSize: '0.9375rem', marginBottom: '8px' }}>Organized By</h4>
-              <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--primary-text)' }}>
+              <h4 style={{ fontSize: '0.875rem', marginBottom: '8px' }}>Curated By</h4>
+              <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                 {event.organizer.name}
               </div>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)', marginTop: '4px' }}>
-                Email: {event.organizer.email}
+              <div style={{ fontSize: '0.78125rem', color: 'var(--color-text-secondary)', marginTop: '4px' }}>
+                Contact: {event.organizer.email}
               </div>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)' }}>
-                Help Desk: {event.organizer.contact}
+              <div style={{ fontSize: '0.78125rem', color: 'var(--color-text-secondary)' }}>
+                Desk: {event.organizer.contact}
               </div>
             </div>
 
-            {/* Rules */}
             {event.rules && event.rules.length > 0 && (
               <div
                 style={{
-                  padding: '16px',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-md)',
+                  padding: '18px',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-sm)',
                 }}
               >
                 <h4
                   style={{
-                    fontSize: '0.9375rem',
+                    fontSize: '0.875rem',
                     marginBottom: '8px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
                   }}
                 >
-                  <ShieldAlert size={16} style={{ color: 'var(--accent)' }} />
-                  Guidelines & Requirements
+                  <ShieldAlert size={14} style={{ color: 'var(--color-accent-deep)' }} />
+                  Guidelines & Prerequisites
                 </h4>
                 <ul
                   style={{
                     paddingLeft: '18px',
-                    fontSize: '0.8125rem',
-                    color: 'var(--secondary-text)',
+                    fontSize: '0.78125rem',
+                    color: 'var(--color-text-secondary)',
                     lineHeight: 1.5,
                   }}
                 >
@@ -497,7 +494,7 @@ export default function EventDetailsModal({
               alignItems: 'center',
               gap: '12px',
               flexWrap: 'wrap',
-              borderTop: '1px solid var(--border)',
+              borderTop: '1px solid var(--color-border)',
               paddingTop: '24px',
             }}
           >
@@ -507,11 +504,11 @@ export default function EventDetailsModal({
                 onClose();
                 onRegisterClick(event);
               }}
-              className={`btn btn-lg ${isRegistered ? 'btn-outline' : 'btn-accent'}`}
+              className={`btn btn-lg ${isRegistered ? 'btn-outline' : 'btn-primary'}`}
               style={{ flex: '1 1 200px' }}
             >
               {isRegistered ? 'View Registration Ticket' : 'Register for this Event'}
-              <ArrowRight size={18} />
+              <ArrowRight size={17} />
             </button>
 
             <button
@@ -520,7 +517,7 @@ export default function EventDetailsModal({
               className="btn btn-secondary btn-lg"
               title="Add event to iCal, Google Calendar, or Outlook"
             >
-              <CalendarPlus size={18} />
+              <CalendarPlus size={16} />
               Add to Calendar
             </button>
 
@@ -530,7 +527,7 @@ export default function EventDetailsModal({
               className="btn btn-secondary btn-lg"
               title="Share event link"
             >
-              <Share2 size={18} />
+              <Share2 size={16} />
               Share
             </button>
           </div>

@@ -7,9 +7,9 @@ export default function LoadingSkeleton({ count = 3 }) {
         <div
           key={i}
           style={{
-            backgroundColor: 'var(--bg-secondary)',
-            borderRadius: 'var(--radius-xl)',
-            border: '1px solid var(--border)',
+            backgroundColor: 'var(--color-surface)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-border)',
             overflow: 'hidden',
             padding: '16px',
             display: 'flex',
@@ -20,9 +20,9 @@ export default function LoadingSkeleton({ count = 3 }) {
           {/* Image skeleton */}
           <div
             style={{
-              height: '180px',
-              borderRadius: 'var(--radius-lg)',
-              backgroundColor: 'var(--muted-surface)',
+              height: '190px',
+              borderRadius: 'var(--radius-sm)',
+              backgroundColor: 'var(--color-surface-muted)',
               animation: 'pulseGlow 1.5s infinite ease-in-out',
             }}
           />
@@ -30,37 +30,37 @@ export default function LoadingSkeleton({ count = 3 }) {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div
               style={{
-                width: '80px',
-                height: '20px',
-                borderRadius: 'var(--radius-pill)',
-                backgroundColor: 'var(--muted-surface)',
+                width: '70px',
+                height: '18px',
+                borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'var(--color-surface-muted)',
               }}
             />
             <div
               style={{
-                width: '100px',
-                height: '20px',
-                borderRadius: 'var(--radius-pill)',
-                backgroundColor: 'var(--muted-surface)',
+                width: '90px',
+                height: '18px',
+                borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'var(--color-surface-muted)',
               }}
             />
           </div>
           {/* Title */}
           <div
             style={{
-              width: '90%',
+              width: '85%',
               height: '24px',
               borderRadius: 'var(--radius-sm)',
-              backgroundColor: 'var(--muted-surface)',
+              backgroundColor: 'var(--color-surface-muted)',
             }}
           />
           {/* Description */}
           <div
             style={{
               width: '100%',
-              height: '40px',
+              height: '36px',
               borderRadius: 'var(--radius-sm)',
-              backgroundColor: 'var(--muted-surface)',
+              backgroundColor: 'var(--color-surface-muted)',
             }}
           />
           {/* Footer CTA */}
@@ -68,9 +68,9 @@ export default function LoadingSkeleton({ count = 3 }) {
             style={{
               marginTop: 'auto',
               width: '100%',
-              height: '42px',
-              borderRadius: 'var(--radius-md)',
-              backgroundColor: 'var(--muted-surface)',
+              height: '40px',
+              borderRadius: 'var(--radius-sm)',
+              backgroundColor: 'var(--color-surface-muted)',
             }}
           />
         </div>

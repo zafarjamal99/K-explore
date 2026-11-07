@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Ticket, Compass, Info, Sparkles } from 'lucide-react';
+import { Menu, X, Ticket, Compass, Info, Sparkles, ArrowRight } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 export default function Navbar({
@@ -21,7 +21,7 @@ export default function Navbar({
   return (
     <header className="nav-header">
       <div className="container nav-inner">
-        {/* Brand Monogram & Title */}
+        {/* Brand Wordmark */}
         <div
           onClick={() => handleNav(onNavigateHome)}
           style={{
@@ -32,50 +32,49 @@ export default function Navbar({
             userSelect: 'none',
           }}
         >
-          {/* Logo Icon */}
+          {/* Stylized Monogram */}
           <div
             style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: 'var(--radius-md)',
-              backgroundColor: 'var(--primary-brand)',
+              width: '34px',
+              height: '34px',
+              borderRadius: 'var(--radius-sm)',
+              backgroundColor: 'var(--color-text-primary)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: 'var(--shadow-sm)',
             }}
           >
-            <svg viewBox="0 0 48 48" width="24" height="24">
-              <path d="M14 12V36" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" />
-              <path d="M14 24L32 12" stroke="#C97958" strokeWidth="5" strokeLinecap="round" />
-              <path d="M14 24L32 36" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" />
+            <svg viewBox="0 0 48 48" width="20" height="20">
+              <path d="M14 12V36" stroke="var(--color-background)" strokeWidth="5" strokeLinecap="round" />
+              <path d="M14 24L32 12" stroke="var(--color-accent)" strokeWidth="5" strokeLinecap="round" />
+              <path d="M14 24L32 36" stroke="var(--color-background)" strokeWidth="5" strokeLinecap="round" />
             </svg>
           </div>
 
           <div>
             <span
               style={{
-                fontFamily: 'var(--font-heading)',
-                fontSize: '1.25rem',
-                fontWeight: 800,
-                letterSpacing: '-0.02em',
-                color: 'var(--primary-text)',
+                fontFamily: 'var(--font-body)',
+                fontSize: '0.9375rem',
+                fontWeight: 700,
+                letterSpacing: '0.16em',
+                color: 'var(--color-text-primary)',
                 display: 'block',
                 lineHeight: 1.1,
               }}
             >
-              K Explore
+              K EXPLORE
             </span>
             <span
               style={{
-                fontSize: '0.6875rem',
-                color: 'var(--secondary-text)',
-                fontWeight: 600,
-                letterSpacing: '0.04em',
+                fontSize: '0.625rem',
+                color: 'var(--color-accent-deep)',
+                letterSpacing: '0.12em',
                 textTransform: 'uppercase',
+                fontWeight: 600,
               }}
             >
-              Campus Events
+              Curated Culture
             </span>
           </div>
         </div>
@@ -86,21 +85,15 @@ export default function Navbar({
           aria-label="Primary navigation"
           style={{
             alignItems: 'center',
-            gap: '28px',
+            gap: '36px',
           }}
         >
           <button
             type="button"
             onClick={() => handleNav(onNavigateHome)}
-            style={{
-              fontSize: '0.9375rem',
-              fontWeight: 600,
-              color: 'var(--primary-text)',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '8px 0',
-            }}
+            style={navLinkStyle}
+            onMouseEnter={(e) => (e.target.style.color = 'var(--color-accent-deep)')}
+            onMouseLeave={(e) => (e.target.style.color = 'var(--color-text-secondary)')}
           >
             Home
           </button>
@@ -108,37 +101,32 @@ export default function Navbar({
           <button
             type="button"
             onClick={() => handleNav(onNavigateEvents)}
-            style={{
-              fontSize: '0.9375rem',
-              fontWeight: 600,
-              color: 'var(--secondary-text)',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '8px 0',
-              transition: 'color var(--transition-fast)',
-            }}
-            onMouseEnter={(e) => (e.target.style.color = 'var(--primary-text)')}
-            onMouseLeave={(e) => (e.target.style.color = 'var(--secondary-text)')}
+            style={navLinkStyle}
+            onMouseEnter={(e) => (e.target.style.color = 'var(--color-accent-deep)')}
+            onMouseLeave={(e) => (e.target.style.color = 'var(--color-text-secondary)')}
           >
-            Explore Events
+            Discover
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              const el = document.getElementById('categories');
+              el?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            style={navLinkStyle}
+            onMouseEnter={(e) => (e.target.style.color = 'var(--color-accent-deep)')}
+            onMouseLeave={(e) => (e.target.style.color = 'var(--color-text-secondary)')}
+          >
+            Categories
           </button>
 
           <button
             type="button"
             onClick={() => handleNav(onNavigateAbout)}
-            style={{
-              fontSize: '0.9375rem',
-              fontWeight: 600,
-              color: 'var(--secondary-text)',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '8px 0',
-              transition: 'color var(--transition-fast)',
-            }}
-            onMouseEnter={(e) => (e.target.style.color = 'var(--primary-text)')}
-            onMouseLeave={(e) => (e.target.style.color = 'var(--secondary-text)')}
+            style={navLinkStyle}
+            onMouseEnter={(e) => (e.target.style.color = 'var(--color-accent-deep)')}
+            onMouseLeave={(e) => (e.target.style.color = 'var(--color-text-secondary)')}
           >
             About
           </button>
@@ -146,32 +134,34 @@ export default function Navbar({
 
         {/* Right Header Actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          {/* My Registrations Button */}
+          {/* My Passes Button */}
           <button
             type="button"
             onClick={onOpenMyRegistrations}
             className="btn btn-secondary btn-sm"
             style={{
               position: 'relative',
-              fontWeight: 600,
+              fontWeight: 500,
+              fontSize: '0.8125rem',
+              letterSpacing: '0.02em',
             }}
           >
-            <Ticket size={16} />
-            <span className="hide-mobile">My Passes</span>
+            <Ticket size={15} style={{ color: 'var(--color-accent-deep)' }} />
+            <span>My Passes</span>
             {registrationCount > 0 && (
               <span
                 style={{
-                  backgroundColor: 'var(--accent)',
+                  backgroundColor: 'var(--color-accent-deep)',
                   color: '#FFFFFF',
-                  fontSize: '0.6875rem',
+                  fontSize: '0.625rem',
                   fontWeight: 700,
-                  width: '20px',
-                  height: '20px',
+                  width: '18px',
+                  height: '18px',
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginLeft: '2px',
+                  marginLeft: '4px',
                 }}
               >
                 {registrationCount}
@@ -182,6 +172,17 @@ export default function Navbar({
           {/* Theme Switcher */}
           <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
 
+          {/* Explore CTA on Desktop */}
+          <button
+            type="button"
+            onClick={onNavigateEvents}
+            className="btn btn-primary btn-sm hide-mobile"
+            style={{ padding: '0 18px' }}
+          >
+            <span>Explore Events</span>
+            <ArrowRight size={14} />
+          </button>
+
           {/* Mobile Menu Hamburger Toggle */}
           <button
             type="button"
@@ -190,12 +191,12 @@ export default function Navbar({
             aria-label="Toggle mobile navigation menu"
             aria-expanded={mobileMenuOpen}
             style={{
-              width: '40px',
-              height: '40px',
+              width: '38px',
+              height: '38px',
               padding: 0,
             }}
           >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
@@ -208,7 +209,7 @@ export default function Navbar({
             onClick={() => handleNav(onNavigateHome)}
             style={mobileNavItemStyle}
           >
-            <Compass size={18} />
+            <Compass size={17} style={{ color: 'var(--color-accent)' }} />
             Home
           </button>
 
@@ -217,8 +218,21 @@ export default function Navbar({
             onClick={() => handleNav(onNavigateEvents)}
             style={mobileNavItemStyle}
           >
-            <Sparkles size={18} />
-            Explore All Events
+            <Sparkles size={17} style={{ color: 'var(--color-accent)' }} />
+            Discover Events
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              const el = document.getElementById('categories');
+              el?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            style={mobileNavItemStyle}
+          >
+            <Info size={17} style={{ color: 'var(--color-accent)' }} />
+            Browse Categories
           </button>
 
           <button
@@ -226,7 +240,7 @@ export default function Navbar({
             onClick={() => handleNav(onNavigateAbout)}
             style={mobileNavItemStyle}
           >
-            <Info size={18} />
+            <Info size={17} style={{ color: 'var(--color-accent)' }} />
             About Platform
           </button>
 
@@ -238,12 +252,12 @@ export default function Navbar({
             }}
             style={{
               ...mobileNavItemStyle,
-              backgroundColor: 'var(--muted-surface)',
-              borderRadius: 'var(--radius-md)',
+              backgroundColor: 'var(--color-surface-muted)',
+              borderRadius: 'var(--radius-sm)',
               padding: '12px 16px',
             }}
           >
-            <Ticket size={18} />
+            <Ticket size={17} style={{ color: 'var(--color-accent-deep)' }} />
             My Registered Passes ({registrationCount})
           </button>
         </div>
@@ -252,13 +266,25 @@ export default function Navbar({
   );
 }
 
+const navLinkStyle = {
+  fontSize: '0.875rem',
+  fontWeight: 500,
+  color: 'var(--color-text-secondary)',
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  padding: '6px 0',
+  letterSpacing: '0.01em',
+  transition: 'color var(--motion-fast) ease',
+};
+
 const mobileNavItemStyle = {
   display: 'flex',
   alignItems: 'center',
   gap: '12px',
-  fontSize: '1rem',
-  fontWeight: 600,
-  color: 'var(--primary-text)',
+  fontSize: '0.9375rem',
+  fontWeight: 500,
+  color: 'var(--color-text-primary)',
   padding: '10px 0',
   background: 'none',
   border: 'none',

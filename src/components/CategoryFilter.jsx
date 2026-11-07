@@ -13,13 +13,14 @@ export default function CategoryFilter({
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '8px',
+        gap: '6px',
         overflowX: 'auto',
         paddingBottom: '8px',
         paddingTop: '4px',
         scrollbarWidth: 'none',
         msOverflowStyle: 'none',
         WebkitOverflowScrolling: 'touch',
+        borderBottom: '1px solid var(--color-border)',
       }}
     >
       {CATEGORIES.map((cat) => {
@@ -33,37 +34,51 @@ export default function CategoryFilter({
             aria-selected={isSelected}
             onClick={() => onSelectCategory(cat)}
             style={{
+              position: 'relative',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '6px',
-              padding: '8px 16px',
-              fontSize: '0.875rem',
+              gap: '8px',
+              padding: '10px 18px',
+              fontSize: '0.84rem',
               fontWeight: isSelected ? 600 : 500,
-              borderRadius: 'var(--radius-pill)',
-              border: `1px solid ${isSelected ? 'var(--primary-brand)' : 'var(--border)'}`,
-              backgroundColor: isSelected ? 'var(--primary-brand)' : 'var(--bg-secondary)',
-              color: isSelected ? '#FFFFFF' : 'var(--primary-text)',
+              border: 'none',
+              backgroundColor: 'transparent',
+              color: isSelected ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
               cursor: 'pointer',
               whiteSpace: 'nowrap',
-              transition: 'all var(--transition-fast)',
-              boxShadow: isSelected ? 'var(--shadow-sm)' : 'none',
+              transition: 'all var(--motion-fast) ease',
             }}
           >
             <span>{cat}</span>
             <span
+              className="tabular-nums"
               style={{
-                fontSize: '0.75rem',
-                padding: '2px 6px',
-                borderRadius: 'var(--radius-pill)',
+                fontSize: '0.72rem',
+                padding: '1px 6px',
+                borderRadius: 'var(--radius-sm)',
                 backgroundColor: isSelected
-                  ? 'rgba(255, 255, 255, 0.22)'
-                  : 'var(--muted-surface)',
-                color: isSelected ? '#FFFFFF' : 'var(--secondary-text)',
+                  ? 'var(--color-accent-subtle)'
+                  : 'var(--color-surface-muted)',
+                color: isSelected ? 'var(--color-accent-deep)' : 'var(--color-text-muted)',
                 fontWeight: 600,
               }}
             >
               {count}
             </span>
+
+            {/* Subtle Active Underline */}
+            {isSelected && (
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: '-1px',
+                  left: '12px',
+                  right: '12px',
+                  height: '2px',
+                  backgroundColor: 'var(--color-accent-deep)',
+                }}
+              />
+            )}
           </button>
         );
       })}

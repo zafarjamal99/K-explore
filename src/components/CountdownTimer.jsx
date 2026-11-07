@@ -19,12 +19,12 @@ export default function CountdownTimer({ targetDate, label = 'Starts in', compac
           display: 'inline-flex',
           alignItems: 'center',
           gap: '6px',
-          fontSize: '0.8125rem',
-          color: 'var(--muted-text)',
+          fontSize: '0.78125rem',
+          color: 'var(--color-text-muted)',
           fontWeight: 500,
         }}
       >
-        <Clock size={14} />
+        <Clock size={13} />
         Registration Closed
       </span>
     );
@@ -38,12 +38,12 @@ export default function CountdownTimer({ targetDate, label = 'Starts in', compac
           display: 'inline-flex',
           alignItems: 'center',
           gap: '6px',
-          fontSize: '0.8125rem',
-          color: 'var(--accent)',
+          fontSize: '0.78125rem',
+          color: 'var(--color-accent-deep)',
           fontWeight: 600,
         }}
       >
-        <Clock size={14} />
+        <Clock size={13} />
         {countdown.days}d {countdown.hours}h {countdown.minutes}m left
       </span>
     );
@@ -54,16 +54,16 @@ export default function CountdownTimer({ targetDate, label = 'Starts in', compac
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '6px',
+        gap: '8px',
       }}
     >
       {label && (
         <span
           style={{
-            fontSize: '0.75rem',
+            fontSize: '0.7rem',
             textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            color: 'var(--secondary-text)',
+            letterSpacing: '0.12em',
+            color: 'var(--color-text-secondary)',
             fontWeight: 600,
           }}
         >
@@ -75,7 +75,7 @@ export default function CountdownTimer({ targetDate, label = 'Starts in', compac
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '10px',
+          gap: '8px',
         }}
       >
         <div style={timerBoxStyle}>
@@ -107,33 +107,33 @@ const timerBoxStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  background: 'var(--muted-surface)',
-  border: '1px solid var(--border)',
-  borderRadius: 'var(--radius-md)',
-  minWidth: '58px',
-  padding: '8px 10px',
+  background: 'var(--color-surface-elevated)',
+  border: '1px solid var(--color-border)',
+  borderRadius: 'var(--radius-sm)',
+  minWidth: '56px',
+  padding: '8px 8px',
 };
 
 const numberStyle = {
-  fontSize: '1.25rem',
-  fontWeight: 700,
-  color: 'var(--primary-text)',
-  lineHeight: 1.1,
-  fontFamily: 'var(--font-heading)',
+  fontSize: '1.45rem',
+  fontWeight: 400,
+  color: 'var(--color-text-primary)',
+  lineHeight: 1,
+  fontFamily: 'var(--font-display)',
 };
 
 const unitStyle = {
-  fontSize: '0.6875rem',
-  color: 'var(--secondary-text)',
+  fontSize: '0.625rem',
+  color: 'var(--color-text-secondary)',
   textTransform: 'uppercase',
   fontWeight: 600,
-  letterSpacing: '0.04em',
-  marginTop: '2px',
+  letterSpacing: '0.06em',
+  marginTop: '3px',
 };
 
 const colonStyle = {
-  fontWeight: 700,
+  fontWeight: 400,
   fontSize: '1.25rem',
-  color: 'var(--secondary-text)',
-  marginBottom: '10px',
+  color: 'var(--color-text-secondary)',
+  marginBottom: '8px',
 };

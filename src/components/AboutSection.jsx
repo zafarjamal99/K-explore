@@ -4,22 +4,22 @@ import { Layers, CalendarCheck2, ShieldCheck, ArrowRight } from 'lucide-react';
 export default function AboutSection({ onExploreClick }) {
   const pillars = [
     {
-      icon: <Layers size={24} style={{ color: 'var(--primary-brand)' }} />,
+      icon: <Layers size={22} style={{ color: 'var(--color-accent)' }} />,
       title: 'Centralized Discovery',
       description:
-        'Say goodbye to scattered group chats and paper flyers. Every verified student society and faculty event is curated in one high-clarity interface.',
+        'Say goodbye to scattered messaging groups and forgotten flyers. Every verified collegiate society, research lab, and cultural event is presented with editorial clarity.',
     },
     {
-      icon: <CalendarCheck2 size={24} style={{ color: 'var(--accent)' }} />,
-      title: 'Accurate Real-time Schedules',
+      icon: <CalendarCheck2 size={22} style={{ color: 'var(--color-accent-deep)' }} />,
+      title: 'Verified Schedules & Venues',
       description:
-        'Always know the exact campus hall, timing, speaker roster, and registration deadlines with live countdown clocks.',
+        'Accurate campus locations, room coordinates, curated speaker rosters, and live countdown clocks keep you informed with zero noise.',
     },
     {
-      icon: <ShieldCheck size={24} style={{ color: 'var(--status-open-text)' }} />,
-      title: 'Frictionless Registration',
+      icon: <ShieldCheck size={22} style={{ color: 'var(--color-success)' }} />,
+      title: 'Frictionless Admission',
       description:
-        'Zero bloated sign-up walls. Register in seconds, inspect duplicate alerts, and retain downloadable offline QR tickets in your browser.',
+        'Reserve seats in seconds. Instant client-side validation prevents duplicate RSVPs, issuing bespoke digital QR passes saved directly in your browser.',
     },
   ];
 
@@ -27,30 +27,21 @@ export default function AboutSection({ onExploreClick }) {
     <section
       id="about"
       aria-labelledby="about-heading"
+      className="reveal"
       style={{
         margin: '80px 0 64px 0',
         padding: '56px 0',
-        borderTop: '1px solid var(--border)',
+        borderTop: '1px solid var(--color-border)',
       }}
     >
-      <div style={{ maxWidth: '720px', marginBottom: '48px' }}>
-        <span
-          style={{
-            fontSize: '0.8125rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.06em',
-            fontWeight: 700,
-            color: 'var(--accent)',
-            display: 'block',
-            marginBottom: '8px',
-          }}
-        >
-          About The Platform
+      <div style={{ maxWidth: '680px', marginBottom: '48px' }}>
+        <span className="eyebrow">
+          ABOUT THE PLATFORM
         </span>
         <h2 id="about-heading" style={{ marginBottom: '16px' }}>
           Crafted for Collegiate Excellence & Discovery.
         </h2>
-        <p style={{ fontSize: '1.0625rem' }}>
+        <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)' }}>
           K Explore is designed to bridge the gap between ambitious university students and high-value campus initiatives. Whether you want to prototype algorithms at midnight or pitch to angel investors, discovery starts here.
         </p>
       </div>
@@ -67,21 +58,22 @@ export default function AboutSection({ onExploreClick }) {
           <div
             key={idx}
             style={{
-              backgroundColor: 'var(--bg-secondary)',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-xl)',
-              padding: '28px',
+              backgroundColor: 'var(--color-surface)',
+              border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-md)',
+              padding: '32px 28px',
               display: 'flex',
               flexDirection: 'column',
               gap: '14px',
+              boxShadow: 'var(--shadow-card)',
             }}
           >
             <div
               style={{
-                width: '48px',
-                height: '48px',
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--muted-surface)',
+                width: '44px',
+                height: '44px',
+                borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'var(--color-surface-muted)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -89,8 +81,8 @@ export default function AboutSection({ onExploreClick }) {
             >
               {pillar.icon}
             </div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700 }}>{pillar.title}</h3>
-            <p style={{ fontSize: '0.9375rem', color: 'var(--secondary-text)' }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 500 }}>{pillar.title}</h3>
+            <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', lineHeight: 1.62 }}>
               {pillar.description}
             </p>
           </div>
@@ -100,41 +92,57 @@ export default function AboutSection({ onExploreClick }) {
       {/* Final Call to Action Banner */}
       <div
         style={{
-          backgroundColor: 'var(--primary-brand)',
-          color: '#FFFFFF',
-          borderRadius: 'var(--radius-xl)',
-          padding: '48px 36px',
+          backgroundColor: 'var(--color-text-primary)',
+          color: 'var(--color-background)',
+          borderRadius: 'var(--radius-lg)',
+          padding: '48px 40px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          gap: '20px',
+          gap: '24px',
           position: 'relative',
           overflow: 'hidden',
+          boxShadow: 'var(--shadow-elevated)',
         }}
       >
         <div style={{ maxWidth: '640px' }}>
-          <h3
+          <span
             style={{
-              color: '#FFFFFF',
-              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-              marginBottom: '10px',
-              fontWeight: 800,
+              fontSize: '0.6875rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.18em',
+              color: 'var(--color-accent)',
+              fontWeight: 600,
+              display: 'block',
+              marginBottom: '8px',
             }}
           >
-            Find Your Next Breakthrough Experience.
+            CAMPUS INVITATION
+          </span>
+          <h3
+            style={{
+              color: 'var(--color-background)',
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
+              marginBottom: '12px',
+              fontWeight: 400,
+              lineHeight: 1.08,
+            }}
+          >
+            Find your next breakthrough experience.
           </h3>
-          <p style={{ color: 'rgba(255, 255, 255, 0.82)', fontSize: '1rem' }}>
-            Join hundreds of classmates expanding their technical and creative frontiers. Check upcoming dates and secure your spot today.
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9625rem' }}>
+            Join hundreds of classmates expanding their technical and creative frontiers. Check upcoming dates and secure your pass today.
           </p>
         </div>
 
         <button
           type="button"
           onClick={onExploreClick}
-          className="btn btn-accent btn-lg"
+          className="btn btn-champagne btn-lg"
         >
           Browse All Events Now
-          <ArrowRight size={18} />
+          <ArrowRight size={17} />
         </button>
       </div>
     </section>

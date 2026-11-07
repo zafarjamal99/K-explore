@@ -17,9 +17,10 @@ describe('K Explore Event Discovery & Registration Integration Flow', () => {
     render(<App />);
 
     // Brand and Hero
-    expect(screen.getAllByText(/K Explore/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Where Campus Culture Meets Discovery/i)).toBeInTheDocument();
-    expect(screen.getByText(/Curator's Spotlight/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/K EXPLORE/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Discover moments/i)).toBeInTheDocument();
+    expect(screen.getByText(/That move you/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Curator's Spotlight/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole('heading', { name: /Explore Upcoming Events/i })).toBeInTheDocument();
   });
 
@@ -39,7 +40,7 @@ describe('K Explore Event Discovery & Registration Integration Flow', () => {
   it('filters events dynamically via search query', async () => {
     render(<App />);
 
-    const searchInput = screen.getByPlaceholderText(/Search events by title/i);
+    const searchInput = screen.getByPlaceholderText(/Search events/i);
     fireEvent.change(searchInput, { target: { value: 'Rust' } });
 
     await waitFor(() => {
@@ -50,11 +51,11 @@ describe('K Explore Event Discovery & Registration Integration Flow', () => {
   it('shows empty state when no events match search query', async () => {
     render(<App />);
 
-    const searchInput = screen.getByPlaceholderText(/Search events by title/i);
+    const searchInput = screen.getByPlaceholderText(/Search events/i);
     fireEvent.change(searchInput, { target: { value: 'NonexistentEventXYZ123' } });
 
     await waitFor(() => {
-      expect(screen.getByText(/No Matching Events Found/i)).toBeInTheDocument();
+      expect(screen.getByText(/No Matching Experiences Found/i)).toBeInTheDocument();
     });
   });
 

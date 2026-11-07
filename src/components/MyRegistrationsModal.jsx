@@ -7,7 +7,6 @@ import {
   Trash2,
   QrCode,
   Download,
-  AlertTriangle,
   Compass,
 } from 'lucide-react';
 import { getStoredRegistrations, deleteRegistration } from '../utils/storageUtils';
@@ -50,11 +49,11 @@ export default function MyRegistrationsModal({
     const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(registrations, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute('href', dataStr);
-    downloadAnchor.setAttribute('download', 'k-explore-my-tickets.json');
+    downloadAnchor.setAttribute('download', 'k-explore-my-passes.json');
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
-    showToast?.('Exported tickets as JSON.', 'success');
+    showToast?.('Exported ticket collection as JSON.', 'success');
   };
 
   return (
@@ -72,35 +71,44 @@ export default function MyRegistrationsModal({
         <div
           style={{
             padding: '24px 28px',
-            borderBottom: '1px solid var(--border)',
+            borderBottom: '1px solid var(--color-border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            backgroundColor: 'var(--bg-secondary)',
+            backgroundColor: 'var(--color-surface)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div
               style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--primary-brand-subtle)',
+                width: '38px',
+                height: '38px',
+                borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'var(--color-accent-subtle)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: 'var(--primary-brand)',
+                color: 'var(--color-accent-deep)',
               }}
             >
-              <Ticket size={20} />
+              <Ticket size={18} />
             </div>
             <div>
-              <h2 id="my-registrations-title" style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>
+              <h2
+                id="my-registrations-title"
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '1.45rem',
+                  fontWeight: 400,
+                  margin: 0,
+                  lineHeight: 1.1,
+                }}
+              >
                 My Registered Passes
               </h2>
-              <p style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)', margin: 0 }}>
+              <p style={{ fontSize: '0.78125rem', color: 'var(--color-text-secondary)', margin: 0 }}>
                 Stored locally in this browser &middot; {registrations.length}{' '}
-                {registrations.length === 1 ? 'ticket' : 'tickets'}
+                {registrations.length === 1 ? 'pass' : 'passes'}
               </p>
             </div>
           </div>
@@ -113,7 +121,7 @@ export default function MyRegistrationsModal({
                 className="btn btn-secondary btn-sm"
                 title="Backup registrations as JSON"
               >
-                <Download size={14} />
+                <Download size={13} />
                 Export JSON
               </button>
             )}
@@ -124,12 +132,12 @@ export default function MyRegistrationsModal({
               style={{
                 background: 'none',
                 border: 'none',
-                color: 'var(--secondary-text)',
+                color: 'var(--color-text-secondary)',
                 cursor: 'pointer',
                 padding: '6px',
               }}
             >
-              <X size={20} />
+              <X size={18} />
             </button>
           </div>
         </div>
@@ -145,29 +153,38 @@ export default function MyRegistrationsModal({
             >
               <div
                 style={{
-                  width: '60px',
-                  height: '60px',
+                  width: '56px',
+                  height: '56px',
                   borderRadius: '50%',
-                  backgroundColor: 'var(--muted-surface)',
+                  backgroundColor: 'var(--color-surface-muted)',
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: '16px',
-                  color: 'var(--secondary-text)',
+                  color: 'var(--color-text-secondary)',
                 }}
               >
-                <Ticket size={28} />
+                <Ticket size={24} />
               </div>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '8px' }}>No Active Registrations</h3>
+              <h3
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '1.5rem',
+                  fontWeight: 400,
+                  marginBottom: '6px',
+                }}
+              >
+                No Active Registrations
+              </h3>
               <p
                 style={{
-                  fontSize: '0.9375rem',
-                  color: 'var(--secondary-text)',
+                  fontSize: '0.875rem',
+                  color: 'var(--color-text-secondary)',
                   maxWidth: '380px',
                   margin: '0 auto 24px auto',
                 }}
               >
-                You haven't registered for any events yet. Browse our curated calendar and reserve your spot!
+                You haven't reserved admission for any campus events yet. Discover our curated calendar and save your spot.
               </p>
               <button
                 type="button"
@@ -177,7 +194,7 @@ export default function MyRegistrationsModal({
                 }}
                 className="btn btn-primary"
               >
-                <Compass size={16} />
+                <Compass size={15} />
                 Explore Events
               </button>
             </div>
@@ -187,10 +204,10 @@ export default function MyRegistrationsModal({
                 <div
                   key={ticket.id}
                   style={{
-                    backgroundColor: 'var(--muted-surface)',
-                    border: '1px solid var(--border)',
-                    borderRadius: 'var(--radius-lg)',
-                    padding: '20px',
+                    backgroundColor: 'var(--color-surface-elevated)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '22px 24px',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '12px',
@@ -209,49 +226,56 @@ export default function MyRegistrationsModal({
                       <div
                         style={{
                           display: 'inline-block',
-                          backgroundColor: 'var(--bg-secondary)',
+                          backgroundColor: 'var(--color-surface)',
                           fontSize: '0.6875rem',
                           fontFamily: 'var(--font-mono)',
-                          fontWeight: 700,
+                          fontWeight: 600,
                           padding: '3px 8px',
                           borderRadius: 'var(--radius-sm)',
-                          border: '1px solid var(--border)',
+                          border: '1px solid var(--color-border)',
                           marginBottom: '6px',
-                          color: 'var(--accent)',
+                          color: 'var(--color-accent-deep)',
                         }}
                       >
                         {ticket.id}
                       </div>
-                      <h4 style={{ fontSize: '1.0625rem', fontWeight: 700 }}>
+                      <h4
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          fontSize: '1.25rem',
+                          fontWeight: 400,
+                          color: 'var(--color-text-primary)',
+                        }}
+                      >
                         {ticket.eventTitle}
                       </h4>
                     </div>
 
-                    {/* Delete / Cancel button */}
+                    {/* Delete Confirm */}
                     {deleteConfirmId === ticket.id ? (
                       <div
                         style={{
                           display: 'flex',
                           alignItems: 'center',
                           gap: '6px',
-                          backgroundColor: 'var(--error-bg)',
+                          backgroundColor: 'var(--color-error-bg)',
                           padding: '6px 10px',
-                          borderRadius: 'var(--radius-md)',
-                          border: '1px solid var(--error-border)',
+                          borderRadius: 'var(--radius-sm)',
+                          border: '1px solid rgba(168, 79, 67, 0.3)',
                         }}
                       >
-                        <span style={{ fontSize: '0.75rem', color: 'var(--error-text)', fontWeight: 600 }}>
+                        <span style={{ fontSize: '0.72rem', color: 'var(--color-error)', fontWeight: 600 }}>
                           Cancel RSVP?
                         </span>
                         <button
                           type="button"
                           onClick={() => handleDelete(ticket.id, ticket.eventTitle)}
                           style={{
-                            background: 'var(--error-text)',
+                            background: 'var(--color-error)',
                             color: '#FFFFFF',
                             border: 'none',
                             padding: '3px 8px',
-                            fontSize: '0.75rem',
+                            fontSize: '0.72rem',
                             fontWeight: 600,
                             borderRadius: 'var(--radius-sm)',
                             cursor: 'pointer',
@@ -265,8 +289,8 @@ export default function MyRegistrationsModal({
                           style={{
                             background: 'none',
                             border: 'none',
-                            color: 'var(--secondary-text)',
-                            fontSize: '0.75rem',
+                            color: 'var(--color-text-secondary)',
+                            fontSize: '0.72rem',
                             cursor: 'pointer',
                             padding: '2px 4px',
                           }}
@@ -283,12 +307,12 @@ export default function MyRegistrationsModal({
                         style={{
                           background: 'none',
                           border: 'none',
-                          color: 'var(--secondary-text)',
+                          color: 'var(--color-text-muted)',
                           cursor: 'pointer',
                           padding: '6px',
                         }}
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={15} />
                       </button>
                     )}
                   </div>
@@ -298,16 +322,16 @@ export default function MyRegistrationsModal({
                       display: 'grid',
                       gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
                       gap: '8px',
-                      fontSize: '0.8125rem',
-                      color: 'var(--secondary-text)',
+                      fontSize: '0.78125rem',
+                      color: 'var(--color-text-secondary)',
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Calendar size={14} style={{ color: 'var(--accent)' }} />
+                      <Calendar size={13} style={{ color: 'var(--color-accent)' }} />
                       <span>{ticket.eventDate || 'Confirmed Schedule'}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <MapPin size={14} style={{ color: 'var(--primary-brand)' }} />
+                      <MapPin size={13} style={{ color: 'var(--color-accent-deep)' }} />
                       <span>{ticket.venue || 'Campus Hall'}</span>
                     </div>
                   </div>
@@ -318,8 +342,8 @@ export default function MyRegistrationsModal({
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       paddingTop: '10px',
-                      borderTop: '1px solid var(--border)',
-                      fontSize: '0.78125rem',
+                      borderTop: '1px solid var(--color-border)',
+                      fontSize: '0.75rem',
                     }}
                   >
                     <span>
@@ -330,7 +354,7 @@ export default function MyRegistrationsModal({
                       onClick={() => setActiveTicket(ticket)}
                       className="btn btn-secondary btn-sm"
                     >
-                      <QrCode size={14} /> View Pass
+                      <QrCode size={13} /> View Pass
                     </button>
                   </div>
                 </div>
@@ -338,16 +362,17 @@ export default function MyRegistrationsModal({
             </div>
           )}
 
-          {/* Quick Lightbox for Individual Pass */}
+          {/* Individual Ticket Pass Lightbox */}
           {activeTicket && (
             <div
               style={{
                 marginTop: '24px',
                 padding: '24px',
-                backgroundColor: 'var(--bg-secondary)',
-                border: '2px solid var(--primary-brand)',
-                borderRadius: 'var(--radius-lg)',
-                animation: 'fadeIn 0.2s ease-out',
+                backgroundColor: 'var(--color-surface)',
+                border: '1px solid var(--color-accent-deep)',
+                borderRadius: 'var(--radius-md)',
+                animation: 'fadeIn 200ms ease-out',
+                boxShadow: 'var(--shadow-card)',
               }}
             >
               <div
@@ -360,10 +385,11 @@ export default function MyRegistrationsModal({
               >
                 <span
                   style={{
-                    fontSize: '0.75rem',
+                    fontSize: '0.6875rem',
                     fontWeight: 700,
                     textTransform: 'uppercase',
-                    color: 'var(--accent)',
+                    letterSpacing: '0.12em',
+                    color: 'var(--color-accent-deep)',
                   }}
                 >
                   Digital Ticket Pass
@@ -371,7 +397,7 @@ export default function MyRegistrationsModal({
                 <button
                   type="button"
                   onClick={() => setActiveTicket(null)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-secondary)' }}
                 >
                   <X size={16} />
                 </button>
@@ -380,27 +406,34 @@ export default function MyRegistrationsModal({
               <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
                 <div
                   style={{
-                    width: '90px',
-                    height: '90px',
+                    width: '88px',
+                    height: '88px',
                     backgroundColor: '#FFFFFF',
                     padding: '6px',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius-sm)',
+                    border: '1px solid var(--color-border)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
                 >
-                  <QrCode size={74} style={{ color: '#191B1F' }} />
+                  <QrCode size={72} style={{ color: '#1C1D1B' }} />
                 </div>
                 <div>
-                  <h4 style={{ fontSize: '1.0625rem', fontWeight: 700 }}>
+                  <h4
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: '1.25rem',
+                      fontWeight: 400,
+                      color: 'var(--color-text-primary)',
+                    }}
+                  >
                     {activeTicket.eventTitle}
                   </h4>
-                  <div style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)' }}>
+                  <div style={{ fontSize: '0.78125rem', color: 'var(--color-text-secondary)' }}>
                     Pass ID: <strong>{activeTicket.id}</strong>
                   </div>
-                  <div style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)' }}>
+                  <div style={{ fontSize: '0.78125rem', color: 'var(--color-text-secondary)' }}>
                     Attendee: {activeTicket.fullName} &middot; {activeTicket.department}
                   </div>
                 </div>
@@ -412,7 +445,7 @@ export default function MyRegistrationsModal({
                   onClick={() => window.print()}
                   className="btn btn-secondary btn-sm"
                 >
-                  <Download size={14} /> Print Pass
+                  <Download size={13} /> Print Pass
                 </button>
               </div>
             </div>

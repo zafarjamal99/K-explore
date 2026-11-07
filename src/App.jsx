@@ -1,11 +1,8 @@
 import React, { useState, useMemo, useRef } from 'react';
 import {
   Compass,
-  Filter,
-  SlidersHorizontal,
   Grid,
   List,
-  Sparkles,
   ArrowUpDown,
   X,
   Check,
@@ -14,11 +11,11 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import StatsBanner from './components/StatsBanner';
 import FeaturedEvent from './components/FeaturedEvent';
+import ActivityOverview from './components/ActivityOverview';
 import CategoryFilter from './components/CategoryFilter';
 import SearchBar from './components/SearchBar';
 import EventCard from './components/EventCard';
 import EmptyState from './components/EmptyState';
-import LoadingSkeleton from './components/LoadingSkeleton';
 import EventDetailsModal from './components/EventDetailsModal';
 import RegistrationForm from './features/registration/RegistrationForm';
 import MyRegistrationsModal from './components/MyRegistrationsModal';
@@ -26,6 +23,7 @@ import AboutSection from './components/AboutSection';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
 import { useTheme } from './hooks/useTheme';
+import { useScrollReveal } from './hooks/useScrollReveal';
 import { EVENTS, CATEGORIES } from './data/events';
 import { getStoredRegistrations } from './utils/storageUtils';
 
@@ -57,17 +55,14 @@ export default function App() {
     setToast({ message, type, id: Date.now() });
   };
 
-  // Check if an event is registered by user
   const isEventRegistered = (eventId) => {
     return registrations.some((r) => r.eventId === eventId);
   };
 
-  // Top featured event
   const featuredEvent = useMemo(() => {
     return EVENTS.find((e) => e.isFeatured) || EVENTS[0];
   }, []);
 
-  // Category counts
   const categoryCounts = useMemo(() => {
     const counts = { All: EVENTS.length };
     CATEGORIES.forEach((cat) => {
@@ -82,14 +77,12 @@ export default function App() {
   const filteredEvents = useMemo(() => {
     let result = [...EVENTS];
 
-    // 1. Category Filter
     if (selectedCategory !== 'All') {
       result = result.filter(
         (e) => e.category.toLowerCase() === selectedCategory.toLowerCase()
       );
     }
 
-    // 2. Search Query (title, description, venue, tags, speaker)
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
       result = result.filter((e) => {
@@ -103,12 +96,10 @@ export default function App() {
       });
     }
 
-    // 3. Status filter
     if (onlyOpenEvents) {
       result = result.filter((e) => e.status === 'open' || e.status === 'closing_soon');
     }
 
-    // 4. Sort
     result.sort((a, b) => {
       if (sortBy === 'date-asc') {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
@@ -127,6 +118,9 @@ export default function App() {
 
     return result;
   }, [selectedCategory, searchQuery, onlyOpenEvents, sortBy]);
+
+  // Activate luxury scroll reveals
+  useScrollReveal([filteredEvents, selectedCategory]);
 
   const handleResetFilters = () => {
     setSearchQuery('');
@@ -150,7 +144,7 @@ export default function App() {
 
   return (
     <div className="app-root">
-      {/* Top Navbar */}
+      {/* Top Luxury Navbar */}
       <Navbar
         theme={theme}
         toggleTheme={toggleTheme}
@@ -165,7 +159,7 @@ export default function App() {
       />
 
       <main className="container">
-        {/* Hero Section */}
+        {/* Screen A: Ultra-Luxury Hero Section */}
         <Hero
           onExploreClick={handleScrollToEvents}
           onFeaturedClick={handleScrollToFeatured}
@@ -184,11 +178,18 @@ export default function App() {
           />
         </div>
 
+        {/* Screen B: Live Event Activity Panel */}
+        <ActivityOverview
+          events={EVENTS}
+          registrations={registrations}
+        />
+
         {/* Event Discovery Section */}
         <section
           ref={eventsSectionRef}
           id="events"
           aria-labelledby="discovery-heading"
+          className="reveal"
           style={{ paddingTop: '32px', scrollMarginTop: '80px' }}
         >
           {/* Section Header */}
@@ -197,26 +198,16 @@ export default function App() {
               display: 'flex',
               flexDirection: 'column',
               gap: '6px',
-              marginBottom: '28px',
+              marginBottom: '32px',
             }}
           >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                color: 'var(--accent)',
-                fontSize: '0.8125rem',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-              }}
-            >
-              <Compass size={16} />
-              <span>Campus Calendar</span>
-            </div>
-            <h2 id="discovery-heading">Explore Upcoming Events</h2>
-            <p style={{ maxWidth: '640px', fontSize: '0.9625rem' }}>
+            <span className="eyebrow">
+              CAMPUS CALENDAR
+            </span>
+            <h2 id="discovery-heading">
+              Explore Upcoming Events
+            </h2>
+            <p style={{ maxWidth: '640px', fontSize: '0.9625rem', color: 'var(--color-text-secondary)' }}>
               Search across key topics, filter by collegiate faculty categories, or view countdown deadlines.
             </p>
           </div>
@@ -229,7 +220,7 @@ export default function App() {
               justifyContent: 'space-between',
               gap: '16px',
               flexWrap: 'wrap',
-              marginBottom: '20px',
+              marginBottom: '24px',
             }}
           >
             <SearchBar
@@ -248,7 +239,7 @@ export default function App() {
                 flexWrap: 'wrap',
               }}
             >
-              {/* Only Open Checkbox Toggle */}
+              {/* Only Open Toggle */}
               <button
                 type="button"
                 onClick={() => setOnlyOpenEvents(!onlyOpenEvents)}
@@ -256,20 +247,20 @@ export default function App() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
-                  padding: '8px 14px',
-                  borderRadius: 'var(--radius-pill)',
-                  border: `1px solid ${onlyOpenEvents ? 'var(--primary-brand)' : 'var(--border)'}`,
+                  padding: '8px 16px',
+                  borderRadius: 'var(--radius-sm)',
+                  border: `1px solid ${onlyOpenEvents ? 'var(--color-accent-deep)' : 'var(--color-border)'}`,
                   backgroundColor: onlyOpenEvents
-                    ? 'var(--primary-brand-subtle)'
-                    : 'var(--bg-secondary)',
-                  color: onlyOpenEvents ? 'var(--primary-brand)' : 'var(--secondary-text)',
+                    ? 'var(--color-accent-subtle)'
+                    : 'var(--color-surface)',
+                  color: onlyOpenEvents ? 'var(--color-accent-deep)' : 'var(--color-text-secondary)',
                   fontSize: '0.8125rem',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  transition: 'all var(--transition-fast)',
+                  transition: 'all var(--motion-fast) ease',
                 }}
               >
-                {onlyOpenEvents && <Check size={14} />}
+                {onlyOpenEvents && <Check size={13} />}
                 Open Seats Only
               </button>
 
@@ -279,14 +270,14 @@ export default function App() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
-                  backgroundColor: 'var(--bg-secondary)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-pill)',
+                  backgroundColor: 'var(--color-surface)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-sm)',
                   padding: '0 14px',
-                  height: '42px',
+                  height: '44px',
                 }}
               >
-                <ArrowUpDown size={14} style={{ color: 'var(--secondary-text)' }} />
+                <ArrowUpDown size={14} style={{ color: 'var(--color-text-muted)' }} />
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
@@ -295,9 +286,9 @@ export default function App() {
                     border: 'none',
                     background: 'transparent',
                     fontSize: '0.8125rem',
-                    fontWeight: 600,
+                    fontWeight: 500,
                     cursor: 'pointer',
-                    color: 'var(--primary-text)',
+                    color: 'var(--color-text-primary)',
                     outline: 'none',
                   }}
                 >
@@ -313,9 +304,9 @@ export default function App() {
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  backgroundColor: 'var(--muted-surface)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-pill)',
+                  backgroundColor: 'var(--color-surface-muted)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-sm)',
                   padding: '3px',
                 }}
               >
@@ -325,14 +316,14 @@ export default function App() {
                   aria-label="Grid layout"
                   style={{
                     border: 'none',
-                    background: viewMode === 'grid' ? 'var(--bg-secondary)' : 'transparent',
-                    color: viewMode === 'grid' ? 'var(--primary-text)' : 'var(--secondary-text)',
-                    borderRadius: 'var(--radius-pill)',
+                    background: viewMode === 'grid' ? 'var(--color-surface)' : 'transparent',
+                    color: viewMode === 'grid' ? 'var(--color-text-primary)' : 'var(--color-text-muted)',
+                    borderRadius: 'var(--radius-sm)',
                     padding: '6px 10px',
                     display: 'flex',
                     alignItems: 'center',
                     cursor: 'pointer',
-                    boxShadow: viewMode === 'grid' ? 'var(--shadow-xs)' : 'none',
+                    boxShadow: viewMode === 'grid' ? 'var(--shadow-card)' : 'none',
                   }}
                 >
                   <Grid size={15} />
@@ -343,14 +334,14 @@ export default function App() {
                   aria-label="List layout"
                   style={{
                     border: 'none',
-                    background: viewMode === 'list' ? 'var(--bg-secondary)' : 'transparent',
-                    color: viewMode === 'list' ? 'var(--primary-text)' : 'var(--secondary-text)',
-                    borderRadius: 'var(--radius-pill)',
+                    background: viewMode === 'list' ? 'var(--color-surface)' : 'transparent',
+                    color: viewMode === 'list' ? 'var(--color-text-primary)' : 'var(--color-text-muted)',
+                    borderRadius: 'var(--radius-sm)',
                     padding: '6px 10px',
                     display: 'flex',
                     alignItems: 'center',
                     cursor: 'pointer',
-                    boxShadow: viewMode === 'list' ? 'var(--shadow-xs)' : 'none',
+                    boxShadow: viewMode === 'list' ? 'var(--shadow-card)' : 'none',
                   }}
                 >
                   <List size={15} />
@@ -374,15 +365,15 @@ export default function App() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginBottom: '24px',
-              fontSize: '0.875rem',
-              color: 'var(--secondary-text)',
+              marginBottom: '28px',
+              fontSize: '0.84rem',
+              color: 'var(--color-text-secondary)',
               flexWrap: 'wrap',
               gap: '12px',
             }}
           >
             <div>
-              Showing <strong style={{ color: 'var(--primary-text)' }}>{filteredEvents.length}</strong> of {EVENTS.length} campus events
+              Showing <strong style={{ color: 'var(--color-text-primary)' }}>{filteredEvents.length}</strong> of {EVENTS.length} campus experiences
             </div>
 
             {(selectedCategory !== 'All' || searchQuery || onlyOpenEvents) && (
@@ -395,7 +386,7 @@ export default function App() {
                     alignItems: 'center',
                     gap: '4px',
                     fontSize: '0.8125rem',
-                    color: 'var(--accent)',
+                    color: 'var(--color-accent-deep)',
                     fontWeight: 600,
                     border: 'none',
                     background: 'none',

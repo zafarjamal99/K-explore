@@ -9,12 +9,13 @@ export default function EventCard({
   isRegistered = false,
 }) {
   const [imgError, setImgError] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const fallbackImage =
     'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80';
 
   const statusConfig = {
-    open: { label: 'Registration Open', className: 'badge-open' },
+    open: { label: 'Open', className: 'badge-open' },
     closing_soon: { label: 'Closing Soon', className: 'badge-closing' },
     closed: { label: 'Closed', className: 'badge-closed' },
   };
@@ -24,35 +25,27 @@ export default function EventCard({
   return (
     <article
       style={{
-        backgroundColor: 'var(--bg-secondary)',
-        borderRadius: 'var(--radius-xl)',
-        border: '1px solid var(--border)',
+        backgroundColor: 'var(--color-surface)',
+        borderRadius: 'var(--radius-md)',
+        border: `1px solid ${isHovered ? 'var(--color-border-strong)' : 'var(--color-border)'}`,
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
-        transition: 'all var(--transition-normal)',
-        boxShadow: 'var(--shadow-sm)',
+        transition: 'transform var(--motion-normal) var(--ease-luxury), box-shadow var(--motion-normal) var(--ease-luxury), border-color var(--motion-normal) var(--ease-luxury)',
+        boxShadow: isHovered ? 'var(--shadow-elevated)' : 'var(--shadow-card)',
+        transform: isHovered ? 'translateY(-3px)' : 'translateY(0)',
         position: 'relative',
       }}
-      className="event-card-hover"
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-4px)';
-        e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-        e.currentTarget.style.borderColor = 'var(--primary-brand)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-        e.currentTarget.style.borderColor = 'var(--border)';
-      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Event Image Banner */}
+      {/* Event Photography Frame */}
       <div
         style={{
           position: 'relative',
-          height: '200px',
+          height: '210px',
           overflow: 'hidden',
-          backgroundColor: 'var(--muted-surface)',
+          backgroundColor: 'var(--color-surface-muted)',
         }}
       >
         <img
@@ -64,30 +57,33 @@ export default function EventCard({
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            transition: 'transform var(--transition-slow)',
+            filter: 'brightness(0.95)',
+            transform: isHovered ? 'scale(1.035)' : 'scale(1)',
+            transition: 'transform 750ms var(--ease-luxury)',
           }}
         />
 
-        {/* Floating Category Badge */}
+        {/* Minimal Category Tag */}
         <div
           style={{
             position: 'absolute',
             top: '14px',
             left: '14px',
-            backgroundColor: 'rgba(25, 27, 31, 0.85)',
+            backgroundColor: 'rgba(28, 29, 27, 0.85)',
             backdropFilter: 'blur(6px)',
-            color: '#FFFFFF',
-            fontSize: '0.75rem',
+            color: '#F4F0E8',
+            fontSize: '0.6875rem',
             fontWeight: 600,
             padding: '4px 10px',
-            borderRadius: 'var(--radius-pill)',
-            letterSpacing: '0.03em',
+            borderRadius: 'var(--radius-sm)',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
           }}
         >
           {event.category}
         </div>
 
-        {/* Registration Status Pill */}
+        {/* Status Pill */}
         <div
           style={{
             position: 'absolute',
@@ -100,27 +96,27 @@ export default function EventCard({
           </span>
         </div>
 
-        {/* Registered Stamp if already registered */}
+        {/* Registered Stamp */}
         {isRegistered && (
           <div
             style={{
               position: 'absolute',
               bottom: '12px',
               right: '12px',
-              backgroundColor: 'var(--success-bg)',
-              color: 'var(--success-text)',
-              border: '1px solid var(--success-border)',
-              borderRadius: 'var(--radius-pill)',
+              backgroundColor: 'var(--color-surface)',
+              color: 'var(--color-success)',
+              border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-sm)',
               padding: '4px 10px',
-              fontSize: '0.75rem',
-              fontWeight: 700,
+              fontSize: '0.72rem',
+              fontWeight: 600,
               display: 'flex',
               alignItems: 'center',
               gap: '4px',
-              boxShadow: 'var(--shadow-sm)',
+              boxShadow: 'var(--shadow-card)',
             }}
           >
-            <CheckCircle2 size={14} /> Registered
+            <CheckCircle2 size={13} /> Registered
           </div>
         )}
       </div>
@@ -128,20 +124,20 @@ export default function EventCard({
       {/* Card Body */}
       <div
         style={{
-          padding: '20px',
+          padding: '24px',
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
         }}
       >
-        {/* Date & Countdown */}
+        {/* Date and Countdown */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            fontSize: '0.8125rem',
-            color: 'var(--secondary-text)',
+            fontSize: '0.78125rem',
+            color: 'var(--color-text-secondary)',
             marginBottom: '10px',
             gap: '8px',
           }}
@@ -152,10 +148,10 @@ export default function EventCard({
               alignItems: 'center',
               gap: '6px',
               fontWeight: 600,
-              color: 'var(--primary-text)',
+              color: 'var(--color-text-primary)',
             }}
           >
-            <Calendar size={14} style={{ color: 'var(--accent)' }} />
+            <Calendar size={13} style={{ color: 'var(--color-accent)' }} />
             {event.displayDate}
           </span>
           <CountdownTimer targetDate={event.date} compact={true} />
@@ -164,11 +160,12 @@ export default function EventCard({
         {/* Title */}
         <h3
           style={{
-            fontSize: '1.1875rem',
-            fontWeight: 700,
-            marginBottom: '8px',
-            lineHeight: 1.35,
-            color: 'var(--primary-text)',
+            fontFamily: 'var(--font-display)',
+            fontSize: '1.35rem',
+            fontWeight: 400,
+            lineHeight: 1.2,
+            marginBottom: '10px',
+            color: 'var(--color-text-primary)',
             cursor: 'pointer',
           }}
           onClick={() => onSelectEvent(event)}
@@ -179,10 +176,10 @@ export default function EventCard({
         {/* Short Description */}
         <p
           style={{
-            fontSize: '0.875rem',
-            color: 'var(--secondary-text)',
-            lineHeight: 1.55,
-            marginBottom: '16px',
+            fontSize: '0.84rem',
+            color: 'var(--color-text-secondary)',
+            lineHeight: 1.58,
+            marginBottom: '18px',
             display: '-webkit-box',
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
@@ -198,12 +195,12 @@ export default function EventCard({
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
-            fontSize: '0.8125rem',
-            color: 'var(--secondary-text)',
+            fontSize: '0.78125rem',
+            color: 'var(--color-text-secondary)',
             marginBottom: '16px',
           }}
         >
-          <MapPin size={14} style={{ color: 'var(--muted-text)', flexShrink: 0 }} />
+          <MapPin size={13} style={{ color: 'var(--color-accent-deep)', flexShrink: 0 }} />
           <span
             style={{
               overflow: 'hidden',
@@ -215,25 +212,25 @@ export default function EventCard({
           </span>
         </div>
 
-        {/* Attendees & Seats Progress */}
+        {/* Attendees & Admission Footer */}
         <div
           style={{
             marginTop: 'auto',
             paddingTop: '14px',
-            borderTop: '1px solid var(--border)',
+            borderTop: '1px solid var(--color-border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             marginBottom: '16px',
             fontSize: '0.75rem',
-            color: 'var(--secondary-text)',
+            color: 'var(--color-text-muted)',
           }}
         >
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-            <Users size={14} />
+            <Users size={13} />
             {event.registeredCount} / {event.totalSeats} Attendees
           </span>
-          <span style={{ fontWeight: 600, color: 'var(--accent)' }}>
+          <span style={{ fontWeight: 600, color: 'var(--color-accent-deep)' }}>
             {event.fee}
           </span>
         </div>
@@ -250,10 +247,7 @@ export default function EventCard({
             type="button"
             onClick={() => onSelectEvent(event)}
             className="btn btn-secondary btn-sm"
-            style={{
-              width: '100%',
-              fontWeight: 600,
-            }}
+            style={{ width: '100%', fontWeight: 500 }}
           >
             Details
           </button>
@@ -262,13 +256,16 @@ export default function EventCard({
             type="button"
             onClick={() => onRegisterClick(event)}
             className={`btn btn-sm ${isRegistered ? 'btn-outline' : 'btn-primary'}`}
-            style={{
-              width: '100%',
-              fontWeight: 600,
-            }}
+            style={{ width: '100%', fontWeight: 600 }}
           >
-            {isRegistered ? 'Ticket' : 'Register'}
-            <ArrowUpRight size={14} />
+            <span>{isRegistered ? 'Ticket' : 'Register'}</span>
+            <ArrowUpRight
+              size={14}
+              style={{
+                transform: isHovered ? 'translate(2px, -2px)' : 'none',
+                transition: 'transform 200ms ease',
+              }}
+            />
           </button>
         </div>
       </div>

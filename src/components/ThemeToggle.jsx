@@ -15,19 +15,19 @@ export default function ThemeToggle({ theme, toggleTheme }) {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '40px',
-        height: '40px',
+        width: '38px',
+        height: '38px',
         padding: 0,
-        borderRadius: 'var(--radius-pill)',
-        border: '1px solid var(--border)',
+        borderRadius: 'var(--radius-sm)',
+        border: '1px solid var(--color-border)',
         cursor: 'pointer',
-        transition: 'all var(--transition-fast)',
+        transition: 'all var(--motion-fast) ease',
       }}
     >
       {isDark ? (
-        <Sun size={18} style={{ color: 'var(--accent)' }} />
+        <Sun size={17} style={{ color: 'var(--color-accent)' }} />
       ) : (
-        <Moon size={18} style={{ color: 'var(--primary-brand)' }} />
+        <Moon size={17} style={{ color: 'var(--color-text-primary)' }} />
       )}
     </button>
   );

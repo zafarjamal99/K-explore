@@ -13,11 +13,11 @@ export default function SearchBar({ searchQuery, setSearchQuery, totalResults, i
       }}
     >
       <Search
-        size={18}
+        size={17}
         style={{
           position: 'absolute',
           left: '16px',
-          color: 'var(--secondary-text)',
+          color: 'var(--color-text-muted)',
           pointerEvents: 'none',
         }}
       />
@@ -25,28 +25,28 @@ export default function SearchBar({ searchQuery, setSearchQuery, totalResults, i
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search events by title, keyword, venue, or speaker..."
+        placeholder="Search events, curators, venues, or topics..."
         aria-label="Search events"
         style={{
           width: '100%',
           height: '46px',
           paddingLeft: '44px',
           paddingRight: searchQuery ? '40px' : '16px',
-          backgroundColor: 'var(--bg-secondary)',
-          border: '1px solid var(--border)',
-          borderRadius: 'var(--radius-pill)',
-          color: 'var(--primary-text)',
-          fontSize: '0.9375rem',
-          transition: 'all var(--transition-fast)',
-          boxShadow: 'var(--shadow-xs)',
+          backgroundColor: 'var(--color-surface)',
+          border: '1px solid var(--color-border)',
+          borderRadius: 'var(--radius-sm)',
+          color: 'var(--color-text-primary)',
+          fontSize: '0.875rem',
+          transition: 'all var(--motion-fast) ease',
+          boxShadow: 'var(--shadow-card)',
         }}
         onFocus={(e) => {
-          e.target.style.borderColor = 'var(--primary-brand)';
-          e.target.style.boxShadow = 'var(--shadow-sm)';
+          e.target.style.borderColor = 'var(--color-accent)';
+          e.target.style.boxShadow = '0 0 0 3px var(--color-accent-subtle)';
         }}
         onBlur={(e) => {
-          e.target.style.borderColor = 'var(--border)';
-          e.target.style.boxShadow = 'var(--shadow-xs)';
+          e.target.style.borderColor = 'var(--color-border)';
+          e.target.style.boxShadow = 'var(--shadow-card)';
         }}
       />
       {searchQuery && (
@@ -59,16 +59,15 @@ export default function SearchBar({ searchQuery, setSearchQuery, totalResults, i
             right: '12px',
             background: 'none',
             border: 'none',
-            color: 'var(--secondary-text)',
+            color: 'var(--color-text-secondary)',
             cursor: 'pointer',
             padding: '6px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            borderRadius: '50%',
           }}
         >
-          <X size={16} />
+          <X size={15} />
         </button>
       )}
     </div>

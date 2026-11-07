@@ -60,7 +60,6 @@ export default function RegistrationForm({
       [name]: type === 'checkbox' ? checked : value,
     }));
 
-    // Clear inline field error on input
     if (errors[name]) {
       setErrors((prev) => {
         const copy = { ...prev };
@@ -73,7 +72,6 @@ export default function RegistrationForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Client validation first
     const clientValidation = validateRegistrationForm(formData, availableEvents);
     if (!clientValidation.isValid) {
       setErrors(clientValidation.errors);
@@ -94,18 +92,17 @@ export default function RegistrationForm({
       if (result.success) {
         setConfirmedTicket(result.registration);
         onRegistrationSuccess?.(result.registration);
-        showToast?.('Registration confirmed successfully!', 'success');
+        showToast?.('Registration confirmed successfully.', 'success');
 
-        // Burst celebratory confetti
         try {
           confetti({
-            particleCount: 80,
-            spread: 60,
+            particleCount: 70,
+            spread: 55,
             origin: { y: 0.6 },
-            colors: ['#243B53', '#C97958', '#1B7A53', '#F5F3EE'],
+            colors: ['#B99A70', '#92704C', '#1C1D1B', '#F6F3ED'],
           });
         } catch (err) {
-          // ignore if canvas unavailable
+          // ignore
         }
       } else {
         setErrors(result.errors || {});
@@ -143,43 +140,49 @@ export default function RegistrationForm({
       aria-labelledby="registration-dialog-title"
     >
       <div className="registration-dialog">
-        {/* Modal Header */}
+        {/* Header */}
         <div
           style={{
             padding: '24px 28px',
-            borderBottom: '1px solid var(--border)',
+            borderBottom: '1px solid var(--color-border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            backgroundColor: 'var(--bg-secondary)',
+            backgroundColor: 'var(--color-surface)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div
               style={{
                 width: '38px',
                 height: '38px',
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--primary-brand-subtle)',
+                borderRadius: 'var(--radius-sm)',
+                backgroundColor: 'var(--color-accent-subtle)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: 'var(--primary-brand)',
+                color: 'var(--color-accent-deep)',
               }}
             >
-              <Ticket size={20} />
+              <Ticket size={18} />
             </div>
             <div>
               <h2
                 id="registration-dialog-title"
-                style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '1.45rem',
+                  fontWeight: 400,
+                  margin: 0,
+                  lineHeight: 1.1,
+                }}
               >
-                {confirmedTicket ? 'Registration Confirmed' : 'Event Registration'}
+                {confirmedTicket ? 'Admission Confirmed' : 'Event Registration'}
               </h2>
-              <p style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)', margin: 0 }}>
+              <p style={{ fontSize: '0.78125rem', color: 'var(--color-text-secondary)', margin: 0 }}>
                 {confirmedTicket
-                  ? 'Your digital campus access ticket is ready'
-                  : 'Complete form to reserve your seat (Free admission)'}
+                  ? 'Your bespoke digital campus pass is active'
+                  : 'Complimentary admission pass &middot; Stored locally'}
               </p>
             </div>
           </div>
@@ -191,16 +194,16 @@ export default function RegistrationForm({
             style={{
               background: 'none',
               border: 'none',
-              color: 'var(--secondary-text)',
+              color: 'var(--color-text-secondary)',
               cursor: 'pointer',
               padding: '6px',
             }}
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
-        {/* Modal Body */}
+        {/* Body */}
         <div style={{ padding: '28px' }}>
           {confirmedTicket ? (
             /* Confirmation Pass Screen */
@@ -213,50 +216,58 @@ export default function RegistrationForm({
               >
                 <div
                   style={{
-                    width: '56px',
-                    height: '56px',
+                    width: '52px',
+                    height: '52px',
                     borderRadius: '50%',
-                    backgroundColor: 'var(--success-bg)',
-                    color: 'var(--success-text)',
+                    backgroundColor: 'var(--color-success-bg)',
+                    color: 'var(--color-success)',
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     marginBottom: '12px',
-                    border: '1px solid var(--success-border)',
+                    border: '1px solid rgba(82, 116, 95, 0.3)',
                   }}
                 >
-                  <CheckCircle2 size={32} />
+                  <CheckCircle2 size={28} />
                 </div>
-                <h3 style={{ fontSize: '1.375rem', fontWeight: 800, marginBottom: '6px' }}>
-                  You're Going!
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '1.75rem',
+                    fontWeight: 400,
+                    marginBottom: '4px',
+                  }}
+                >
+                  You are registered.
                 </h3>
-                <p style={{ fontSize: '0.875rem', color: 'var(--secondary-text)' }}>
-                  A copy of this registration has been safely persisted to your browser's local storage.
+                <p style={{ fontSize: '0.84rem', color: 'var(--color-text-secondary)' }}>
+                  A copy of this digital invitation has been safely recorded in your browser's LocalStorage.
                 </p>
               </div>
 
-              {/* Printable Ticket Badge Card */}
+              {/* Bespoke Ticket Badge Card */}
               <div
                 className="printable-ticket"
                 style={{
-                  backgroundColor: 'var(--muted-surface)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-lg)',
-                  padding: '24px',
+                  backgroundColor: 'var(--color-surface-elevated)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '28px 24px',
                   marginBottom: '24px',
                   position: 'relative',
                   overflow: 'hidden',
+                  boxShadow: 'var(--shadow-card)',
                 }}
               >
-                {/* Accent top stripe */}
+                {/* Thin Top Accent Stripe */}
                 <div
                   style={{
                     position: 'absolute',
                     top: 0,
                     left: 0,
                     right: 0,
-                    height: '5px',
-                    backgroundColor: 'var(--accent)',
+                    height: '3px',
+                    background: 'var(--gradient-champagne)',
                   }}
                 />
 
@@ -265,37 +276,45 @@ export default function RegistrationForm({
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'flex-start',
-                    marginBottom: '16px',
-                    borderBottom: '1px dashed var(--border)',
+                    marginBottom: '18px',
+                    borderBottom: '1px dashed var(--color-border)',
                     paddingBottom: '14px',
                   }}
                 >
                   <div>
                     <span
                       style={{
-                        fontSize: '0.6875rem',
+                        fontSize: '0.65rem',
                         textTransform: 'uppercase',
-                        letterSpacing: '0.05em',
-                        color: 'var(--accent)',
+                        letterSpacing: '0.14em',
+                        color: 'var(--color-accent-deep)',
                         fontWeight: 700,
                       }}
                     >
-                      K EXPLORE OFFICIAL PASS
+                      K EXPLORE &middot; OFFICIAL PASS
                     </span>
-                    <h4 style={{ fontSize: '1.125rem', fontWeight: 700, marginTop: '2px' }}>
+                    <h4
+                      style={{
+                        fontFamily: 'var(--font-display)',
+                        fontSize: '1.35rem',
+                        fontWeight: 400,
+                        marginTop: '3px',
+                        color: 'var(--color-text-primary)',
+                      }}
+                    >
                       {confirmedTicket.eventTitle}
                     </h4>
                   </div>
                   <div
                     style={{
-                      backgroundColor: 'var(--bg-secondary)',
+                      backgroundColor: 'var(--color-surface)',
                       padding: '6px 10px',
                       borderRadius: 'var(--radius-sm)',
-                      fontSize: '0.8125rem',
+                      fontSize: '0.78125rem',
                       fontFamily: 'var(--font-mono)',
-                      fontWeight: 700,
-                      color: 'var(--primary-brand)',
-                      border: '1px solid var(--border)',
+                      fontWeight: 600,
+                      color: 'var(--color-accent-deep)',
+                      border: '1px solid var(--color-border)',
                     }}
                   >
                     {confirmedTicket.id}
@@ -314,48 +333,48 @@ export default function RegistrationForm({
                   {/* Generated QR Pass Vector */}
                   <div
                     style={{
-                      width: '100px',
-                      height: '100px',
+                      width: '96px',
+                      height: '96px',
                       backgroundColor: '#FFFFFF',
                       padding: '8px',
-                      borderRadius: 'var(--radius-md)',
-                      border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius-sm)',
+                      border: '1px solid var(--color-border)',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: 'var(--shadow-xs)',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
                     }}
                   >
-                    <QrCode size={76} style={{ color: '#191B1F' }} />
-                    <span style={{ fontSize: '0.5625rem', color: '#686B70', fontWeight: 600 }}>
-                      SCAN AT DOOR
+                    <QrCode size={70} style={{ color: '#1C1D1B' }} />
+                    <span style={{ fontSize: '0.5rem', color: '#696B68', fontWeight: 600, letterSpacing: '0.06em', marginTop: '2px' }}>
+                      SCAN AT DESK
                     </span>
                   </div>
 
                   <div style={{ flex: 1, minWidth: '180px' }}>
                     <div style={{ marginBottom: '8px' }}>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--secondary-text)' }}>
-                        Attendee:
+                      <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        Registered Attendee
                       </span>
-                      <div style={{ fontSize: '0.9375rem', fontWeight: 700 }}>
+                      <div style={{ fontSize: '0.9625rem', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                         {confirmedTicket.fullName}
                       </div>
-                      <div style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)' }}>
+                      <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)' }}>
                         {confirmedTicket.email}
                       </div>
                     </div>
 
-                    <div style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)' }}>
+                    <div style={{ fontSize: '0.78125rem', color: 'var(--color-text-secondary)' }}>
                       <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                        <Calendar size={13} style={{ color: 'var(--accent)' }} />
+                        <Calendar size={13} style={{ color: 'var(--color-accent)' }} />
                         {confirmedTicket.eventDate}
                       </span>
                     </div>
 
-                    <div style={{ fontSize: '0.8125rem', color: 'var(--secondary-text)', marginTop: '2px' }}>
+                    <div style={{ fontSize: '0.78125rem', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
                       <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                        <MapPin size={13} style={{ color: 'var(--primary-brand)' }} />
+                        <MapPin size={13} style={{ color: 'var(--color-accent-deep)' }} />
                         {confirmedTicket.venue}
                       </span>
                     </div>
@@ -366,29 +385,24 @@ export default function RegistrationForm({
                   style={{
                     marginTop: '16px',
                     paddingTop: '12px',
-                    borderTop: '1px solid var(--border)',
-                    fontSize: '0.75rem',
-                    color: 'var(--secondary-text)',
+                    borderTop: '1px solid var(--color-border)',
+                    fontSize: '0.72rem',
+                    color: 'var(--color-text-muted)',
                   }}
                 >
-                  * Stored in browser LocalStorage. No physical printing mandatory; showing this screen at the venue is accepted.
+                  * Saved in client-side LocalStorage. You may present this digital pass on your screen at the venue reception.
                 </div>
               </div>
 
               {/* Actions */}
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '12px',
-                }}
-              >
+              <div style={{ display: 'flex', gap: '12px' }}>
                 <button
                   type="button"
                   onClick={handlePrintTicket}
                   className="btn btn-secondary"
                   style={{ flex: 1 }}
                 >
-                  <Download size={16} />
+                  <Download size={15} />
                   Print / Save Pass
                 </button>
                 <button
@@ -402,7 +416,7 @@ export default function RegistrationForm({
               </div>
             </div>
           ) : (
-            /* Registration Form Fields */
+            /* Form Fields */
             <form onSubmit={handleSubmit} noValidate>
               {/* Event Selector */}
               <div style={{ marginBottom: '18px' }}>
@@ -410,12 +424,13 @@ export default function RegistrationForm({
                   htmlFor="eventId"
                   style={{
                     display: 'block',
-                    fontSize: '0.875rem',
+                    fontSize: '0.8125rem',
                     fontWeight: 600,
                     marginBottom: '6px',
+                    color: 'var(--color-text-primary)',
                   }}
                 >
-                  Selected Event <span style={{ color: 'var(--error-text)' }}>*</span>
+                  Selected Event <span style={{ color: 'var(--color-error)' }}>*</span>
                 </label>
                 <select
                   id="eventId"
@@ -426,12 +441,12 @@ export default function RegistrationForm({
                   aria-describedby={errors.eventId ? 'eventId-error' : undefined}
                   style={{
                     width: '100%',
-                    height: '44px',
+                    height: '46px',
                     padding: '0 14px',
-                    backgroundColor: 'var(--bg-primary)',
-                    border: `1px solid ${errors.eventId ? 'var(--error-text)' : 'var(--border)'}`,
-                    borderRadius: 'var(--radius-md)',
-                    color: 'var(--primary-text)',
+                    backgroundColor: 'var(--color-surface)',
+                    border: `1px solid ${errors.eventId ? 'var(--color-error)' : 'var(--color-border)'}`,
+                    borderRadius: 'var(--radius-sm)',
+                    color: 'var(--color-text-primary)',
                     cursor: 'pointer',
                   }}
                 >
@@ -443,12 +458,12 @@ export default function RegistrationForm({
                 </select>
                 {errors.eventId && (
                   <p id="eventId-error" style={errorTextStyle}>
-                    <AlertCircle size={14} /> {errors.eventId}
+                    <AlertCircle size={13} /> {errors.eventId}
                   </p>
                 )}
               </div>
 
-              {/* Event Preview Pill */}
+              {/* Current Event Preview */}
               {currentEvent && (
                 <div
                   style={{
@@ -456,14 +471,14 @@ export default function RegistrationForm({
                     alignItems: 'center',
                     gap: '10px',
                     padding: '10px 14px',
-                    backgroundColor: 'var(--muted-surface)',
-                    borderRadius: 'var(--radius-md)',
+                    backgroundColor: 'var(--color-surface-muted)',
+                    borderRadius: 'var(--radius-sm)',
                     marginBottom: '20px',
-                    fontSize: '0.8125rem',
-                    color: 'var(--secondary-text)',
+                    fontSize: '0.78125rem',
+                    color: 'var(--color-text-secondary)',
                   }}
                 >
-                  <span className="badge badge-open" style={{ fontSize: '0.6875rem' }}>
+                  <span className="badge badge-open" style={{ fontSize: '0.65rem' }}>
                     {currentEvent.category}
                   </span>
                   <span>{currentEvent.displayDate}</span>
@@ -476,12 +491,13 @@ export default function RegistrationForm({
                   htmlFor="fullName"
                   style={{
                     display: 'block',
-                    fontSize: '0.875rem',
+                    fontSize: '0.8125rem',
                     fontWeight: 600,
                     marginBottom: '6px',
+                    color: 'var(--color-text-primary)',
                   }}
                 >
-                  Participant Full Name <span style={{ color: 'var(--error-text)' }}>*</span>
+                  Participant Full Name <span style={{ color: 'var(--color-error)' }}>*</span>
                 </label>
                 <input
                   id="fullName"
@@ -494,22 +510,22 @@ export default function RegistrationForm({
                   aria-describedby={errors.fullName ? 'fullName-error' : undefined}
                   style={{
                     width: '100%',
-                    height: '44px',
+                    height: '46px',
                     padding: '0 14px',
-                    backgroundColor: 'var(--bg-primary)',
-                    border: `1px solid ${errors.fullName ? 'var(--error-text)' : 'var(--border)'}`,
-                    borderRadius: 'var(--radius-md)',
-                    color: 'var(--primary-text)',
+                    backgroundColor: 'var(--color-surface)',
+                    border: `1px solid ${errors.fullName ? 'var(--color-error)' : 'var(--color-border)'}`,
+                    borderRadius: 'var(--radius-sm)',
+                    color: 'var(--color-text-primary)',
                   }}
                 />
                 {errors.fullName && (
                   <p id="fullName-error" style={errorTextStyle}>
-                    <AlertCircle size={14} /> {errors.fullName}
+                    <AlertCircle size={13} /> {errors.fullName}
                   </p>
                 )}
               </div>
 
-              {/* Email & Phone in 2 Cols */}
+              {/* Email & Phone */}
               <div
                 style={{
                   display: 'grid',
@@ -523,12 +539,13 @@ export default function RegistrationForm({
                     htmlFor="email"
                     style={{
                       display: 'block',
-                      fontSize: '0.875rem',
+                      fontSize: '0.8125rem',
                       fontWeight: 600,
                       marginBottom: '6px',
+                      color: 'var(--color-text-primary)',
                     }}
                   >
-                    Email Address <span style={{ color: 'var(--error-text)' }}>*</span>
+                    Email Address <span style={{ color: 'var(--color-error)' }}>*</span>
                   </label>
                   <input
                     id="email"
@@ -541,17 +558,17 @@ export default function RegistrationForm({
                     aria-describedby={errors.email ? 'email-error' : undefined}
                     style={{
                       width: '100%',
-                      height: '44px',
+                      height: '46px',
                       padding: '0 14px',
-                      backgroundColor: 'var(--bg-primary)',
-                      border: `1px solid ${errors.email ? 'var(--error-text)' : 'var(--border)'}`,
-                      borderRadius: 'var(--radius-md)',
-                      color: 'var(--primary-text)',
+                      backgroundColor: 'var(--color-surface)',
+                      border: `1px solid ${errors.email ? 'var(--color-error)' : 'var(--color-border)'}`,
+                      borderRadius: 'var(--radius-sm)',
+                      color: 'var(--color-text-primary)',
                     }}
                   />
                   {errors.email && (
                     <p id="email-error" style={errorTextStyle}>
-                      <AlertCircle size={14} /> {errors.email}
+                      <AlertCircle size={13} /> {errors.email}
                     </p>
                   )}
                 </div>
@@ -561,12 +578,13 @@ export default function RegistrationForm({
                     htmlFor="phone"
                     style={{
                       display: 'block',
-                      fontSize: '0.875rem',
+                      fontSize: '0.8125rem',
                       fontWeight: 600,
                       marginBottom: '6px',
+                      color: 'var(--color-text-primary)',
                     }}
                   >
-                    Phone Number <span style={{ color: 'var(--error-text)' }}>*</span>
+                    Phone Number <span style={{ color: 'var(--color-error)' }}>*</span>
                   </label>
                   <input
                     id="phone"
@@ -579,23 +597,23 @@ export default function RegistrationForm({
                     aria-describedby={errors.phone ? 'phone-error' : undefined}
                     style={{
                       width: '100%',
-                      height: '44px',
+                      height: '46px',
                       padding: '0 14px',
-                      backgroundColor: 'var(--bg-primary)',
-                      border: `1px solid ${errors.phone ? 'var(--error-text)' : 'var(--border)'}`,
-                      borderRadius: 'var(--radius-md)',
-                      color: 'var(--primary-text)',
+                      backgroundColor: 'var(--color-surface)',
+                      border: `1px solid ${errors.phone ? 'var(--color-error)' : 'var(--color-border)'}`,
+                      borderRadius: 'var(--radius-sm)',
+                      color: 'var(--color-text-primary)',
                     }}
                   />
                   {errors.phone && (
                     <p id="phone-error" style={errorTextStyle}>
-                      <AlertCircle size={14} /> {errors.phone}
+                      <AlertCircle size={13} /> {errors.phone}
                     </p>
                   )}
                 </div>
               </div>
 
-              {/* Department & Year for University Context */}
+              {/* Department & Year */}
               <div
                 style={{
                   display: 'grid',
@@ -609,12 +627,13 @@ export default function RegistrationForm({
                     htmlFor="department"
                     style={{
                       display: 'block',
-                      fontSize: '0.875rem',
+                      fontSize: '0.8125rem',
                       fontWeight: 600,
                       marginBottom: '6px',
+                      color: 'var(--color-text-primary)',
                     }}
                   >
-                    Academic Department
+                    Academic Faculty / Society
                   </label>
                   <input
                     id="department"
@@ -622,15 +641,15 @@ export default function RegistrationForm({
                     type="text"
                     value={formData.department}
                     onChange={handleChange}
-                    placeholder="e.g. Computer Science / Electronics"
+                    placeholder="e.g. Computer Science"
                     style={{
                       width: '100%',
-                      height: '44px',
+                      height: '46px',
                       padding: '0 14px',
-                      backgroundColor: 'var(--bg-primary)',
-                      border: '1px solid var(--border)',
-                      borderRadius: 'var(--radius-md)',
-                      color: 'var(--primary-text)',
+                      backgroundColor: 'var(--color-surface)',
+                      border: '1px solid var(--color-border)',
+                      borderRadius: 'var(--radius-sm)',
+                      color: 'var(--color-text-primary)',
                     }}
                   />
                 </div>
@@ -640,9 +659,10 @@ export default function RegistrationForm({
                     htmlFor="academicYear"
                     style={{
                       display: 'block',
-                      fontSize: '0.875rem',
+                      fontSize: '0.8125rem',
                       fontWeight: 600,
                       marginBottom: '6px',
+                      color: 'var(--color-text-primary)',
                     }}
                   >
                     Academic Standing
@@ -654,12 +674,12 @@ export default function RegistrationForm({
                     onChange={handleChange}
                     style={{
                       width: '100%',
-                      height: '44px',
+                      height: '46px',
                       padding: '0 14px',
-                      backgroundColor: 'var(--bg-primary)',
-                      border: '1px solid var(--border)',
-                      borderRadius: 'var(--radius-md)',
-                      color: 'var(--primary-text)',
+                      backgroundColor: 'var(--color-surface)',
+                      border: '1px solid var(--color-border)',
+                      borderRadius: 'var(--radius-sm)',
+                      color: 'var(--color-text-primary)',
                     }}
                   >
                     <option value="Freshman (1st Year)">Freshman (1st Year)</option>
@@ -680,8 +700,8 @@ export default function RegistrationForm({
                     alignItems: 'flex-start',
                     gap: '10px',
                     cursor: 'pointer',
-                    fontSize: '0.84rem',
-                    color: 'var(--secondary-text)',
+                    fontSize: '0.8125rem',
+                    color: 'var(--color-text-secondary)',
                     lineHeight: 1.45,
                   }}
                 >
@@ -690,16 +710,16 @@ export default function RegistrationForm({
                     name="agreeTerms"
                     checked={formData.agreeTerms}
                     onChange={handleChange}
-                    style={{ marginTop: '2px', accentColor: 'var(--accent)' }}
+                    style={{ marginTop: '2px', accentColor: 'var(--color-accent-deep)' }}
                   />
                   <span>
-                    I confirm that I will adhere to the venue guidelines and student code of conduct.
-                    I acknowledge that this demonstration pass is stored within this browser's LocalStorage.
+                    I confirm adherence to the university code of conduct and event hall guidelines.
+                    I understand this demonstration RSVP is stored within this browser's LocalStorage.
                   </span>
                 </label>
                 {errors.agreeTerms && (
                   <p style={errorTextStyle}>
-                    <AlertCircle size={14} /> {errors.agreeTerms}
+                    <AlertCircle size={13} /> {errors.agreeTerms}
                   </p>
                 )}
               </div>
@@ -708,16 +728,16 @@ export default function RegistrationForm({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="btn btn-accent btn-lg"
+                className="btn btn-primary btn-lg"
                 style={{ width: '100%' }}
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 size={18} className="animate-spin" />
+                    <Loader2 size={16} className="animate-spin" />
                     Validating & Confirming...
                   </>
                 ) : (
-                  'Confirm Free Registration'
+                  'Confirm Free Admission Pass'
                 )}
               </button>
             </form>
@@ -732,8 +752,8 @@ const errorTextStyle = {
   display: 'flex',
   alignItems: 'center',
   gap: '6px',
-  color: 'var(--error-text)',
-  fontSize: '0.78125rem',
+  color: 'var(--color-error)',
+  fontSize: '0.75rem',
   marginTop: '5px',
   fontWeight: 500,
 };
