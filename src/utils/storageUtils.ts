@@ -50,7 +50,11 @@ export function saveRegistration(record: {
     registeredAt: new Date().toISOString(),
   };
 
-  localStorage.setItem(REGISTRATIONS_KEY, JSON.stringify([newRegistration, ...existing]));
+  try {
+    localStorage.setItem(REGISTRATIONS_KEY, JSON.stringify([newRegistration, ...existing]));
+  } catch (err) {
+    console.warn('[Storage] Failed to save registration:', err);
+  }
   return { success: true, registration: newRegistration };
 }
 
@@ -88,7 +92,7 @@ export function getStoredBookings(): OrderBooking[] {
 
 export function saveOrderBooking(data: Omit<OrderBooking, 'id' | 'bookedAt' | 'qrData'>): OrderBooking {
   const existing = getStoredBookings();
-  const id = `BMS-2026-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+  const id = `KX-BOOKING-2026-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
   const newBooking: OrderBooking = {
     ...data,
     id,
@@ -96,7 +100,11 @@ export function saveOrderBooking(data: Omit<OrderBooking, 'id' | 'bookedAt' | 'q
     qrData: `TICKET-AUTH:${id}-${data.customerEmail}`,
   };
 
-  localStorage.setItem(BOOKINGS_KEY, JSON.stringify([newBooking, ...existing]));
+  try {
+    localStorage.setItem(BOOKINGS_KEY, JSON.stringify([newBooking, ...existing]));
+  } catch (err) {
+    console.warn('[Storage] Failed to persist booking to localStorage:', err);
+  }
   return newBooking;
 }
 
@@ -137,7 +145,11 @@ export function getCustomDomainEvents(): DomainEvent[] {
 
 export function saveCustomDomainEvent(event: DomainEvent): void {
   const existing = getCustomDomainEvents();
-  localStorage.setItem(CUSTOM_EVENTS_KEY, JSON.stringify([event, ...existing]));
+  try {
+    localStorage.setItem(CUSTOM_EVENTS_KEY, JSON.stringify([event, ...existing]));
+  } catch (err) {
+    console.warn('[Storage] Failed to save custom event:', err);
+  }
 }
 
 // -------------------------------------------------------------
@@ -164,7 +176,11 @@ export function saveBookingInquiry(data: Omit<BookingInquiry, 'id' | 'createdAt'
     createdAt: new Date().toISOString(),
   };
 
-  localStorage.setItem(INQUIRIES_KEY, JSON.stringify([newRecord, ...existing]));
+  try {
+    localStorage.setItem(INQUIRIES_KEY, JSON.stringify([newRecord, ...existing]));
+  } catch (err) {
+    console.warn('[Storage] Failed to save inquiry:', err);
+  }
   return newRecord;
 }
 
@@ -198,7 +214,11 @@ export function saveContactSubmission(data: Omit<ContactSubmission, 'id' | 'crea
     createdAt: new Date().toISOString(),
   };
 
-  localStorage.setItem(CONTACTS_KEY, JSON.stringify([newRecord, ...existing]));
+  try {
+    localStorage.setItem(CONTACTS_KEY, JSON.stringify([newRecord, ...existing]));
+  } catch (err) {
+    console.warn('[Storage] Failed to save contact submission:', err);
+  }
   return newRecord;
 }
 
@@ -214,12 +234,20 @@ export function getCustomTourDates(): TourDate[] {
 
 export function saveTourDate(tourDate: TourDate): void {
   const existing = getCustomTourDates();
-  localStorage.setItem(CUSTOM_TOURS_KEY, JSON.stringify([tourDate, ...existing]));
+  try {
+    localStorage.setItem(CUSTOM_TOURS_KEY, JSON.stringify([tourDate, ...existing]));
+  } catch (err) {
+    console.warn('[Storage] Failed to save tour date:', err);
+  }
 }
 
 export function deleteTourDate(id: string): void {
   const existing = getCustomTourDates();
-  localStorage.setItem(CUSTOM_TOURS_KEY, JSON.stringify(existing.filter((d) => d.id !== id)));
+  try {
+    localStorage.setItem(CUSTOM_TOURS_KEY, JSON.stringify(existing.filter((d) => d.id !== id)));
+  } catch (err) {
+    console.warn('[Storage] Failed to delete tour date:', err);
+  }
 }
 
 export function getStoredTheme(): 'light' | 'dark' {

@@ -330,6 +330,11 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
       'https://images.unsplash.com/photo-1532974297617-c0f05fe48bff?auto=format&fit=crop&w=1200&q=80',
     ],
     description: 'Blistering speed under 1,600 floodlights along the waterfront street circuit, featuring 61 laps of high-g turn maneuvers.',
+    ageRestriction: '12+ Years',
+    language: 'English',
+    durationFormatted: '2 hrs 30 mins',
+    minPrice: 220,
+    maxPrice: 650,
     ticketTiers: [
       {
         id: 'tier-f1-grandstand',
