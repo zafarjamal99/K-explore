@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // Hashed with argon2 / bcrypt
+  name      String
+  role      String   @default("MANAGER") // SUPERADMIN, MANAGER, PRESS_OFFICER
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Artist {
+  id               String      @id @default(uuid())
+  slug             String      @unique
+  name             String
+  tagline          String
+  bio              String[]
+  genre            String[]
+  heroImageUrl     String
+  portraitImageUrl String
+  spotifyUrl       String?
+  appleMusicUrl    String?
+  youtubeUrl       String?
+  instagramUrl     String?
+  albums           Album[]
+  tours            Tour[]
+  media            MediaItem[]
+  posts            BlogPost[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model Album {
+  id           String   @id @default(uuid())
+  artistId     String
+  artist       Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  title        String
+  type         String   // "LP" | "EP" | "Live"
+  releaseYear  Int
+  releaseDate  String
+  coverImage   String
+  recordLabel  String?
+  spotifyUrl   String?
+  appleMusicUrl String?
+  tracks       Track[]
+  createdAt    DateTime @default(now())
+}
+
+model Track {
+  id                String  @id @default(uuid())
+  albumId           String
+  album             Album   @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  trackNumber       Int
+  title             String
+  durationSec       Int
+  durationFormatted String
+  audioSampleUrl    String?
+}
+
+model Tour {
+  id        String     @id @default(uuid())
+  artistId  String
+  artist    Artist     @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  title     String
+  year      Int
+  dates     TourDate[]
+  createdAt DateTime   @default(now())
+}
+
+model TourDate {
+  id           String   @id @default(uuid())
+  tourId       String
+  tour         Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  venue        String
+  city         String
+  state        String?
+  country      String
+  region       String   // "North America" | "Europe" | "Asia Pacific" | "Latin America"
+  eventDate    DateTime
+  doorTime     String?
+  showTime     String?
+  ticketUrl    String?
+  vipTicketUrl String?
+  ticketStatus String   @default("ON_SALE") // "ON_SALE" | "SOLD_OUT" | "CANCELLED" | "POSTPONED" | "FREE_RSVP"
+  isUpcoming   Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO_EMBED
+  HLS_STREAM
+}
+
+model MediaItem {
+  id           String    @id @default(uuid())
+  artistId     String
+  artist       Artist    @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  type         MediaType @default(IMAGE)
+  url          String
+  thumbnailUrl String?
+  title        String
+  caption      String?
+  location     String?
+  year         Int?
+  isFeatured   Boolean   @default(false)
+  photographer String?
+  createdAt    DateTime  @default(now())
+}
+
+model BookingInquiry {
+  id               String   @id @default(uuid())
+  artistName       String
+  promoterName     String
+  promoterEmail    String
+  promoterPhone    String
+  organization     String?
+  eventDate        String
+  venueName        String
+  cityCountry      String
+  capacity         Int
+  offeredBudgetUsd Float
+  eventDetails     String
+  status           String   @default("PENDING") // "PENDING" | "REVIEWING" | "ACCEPTED" | "DECLINED"
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id        String   @id @default(uuid())
+  fullName  String
+  email     String
+  category  String   // "General" | "Press & Media" | "Licensing" | "VIP Fan Club"
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model BlogPost {
+  id         String   @id @default(uuid())
+  artistId   String
+  artist     Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  slug       String   @unique
+  title      String
+  category   String
+  date       String
+  author     String
+  coverImage String
+  excerpt    String
+  content    String
+  readTime   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

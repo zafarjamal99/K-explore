@@ -1,31 +1,29 @@
-/**
- * Calendar Utilities - Generates standard .ics file for calendar export
- */
+import { TourDate } from '../types';
 
-export function downloadCalendarEvent(event) {
-  if (!event || !event.date) return;
+export function downloadTourIcs(tour: TourDate, artistName: string): void {
+  if (!tour || !tour.eventDate) return;
 
-  const startDate = new Date(event.date);
-  const endDate = event.endDate ? new Date(event.endDate) : new Date(startDate.getTime() + 3 * 3600000);
+  const startDate = new Date(tour.eventDate);
+  const endDate = new Date(startDate.getTime() + 3 * 3600000);
 
-  const formatIcsDate = (d) => {
+  const formatIcsDate = (d: Date) => {
     return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
   };
 
   const icsContent = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//K Explore//Campus Events//EN',
+    'PRODID:-//K Explore//Artist Tour Calendar//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
-    `UID:${event.id}-${startDate.getTime()}@k-explore.edu`,
+    `UID:${tour.id}-${startDate.getTime()}@k-explore-tours.com`,
     `DTSTAMP:${formatIcsDate(new Date())}`,
     `DTSTART:${formatIcsDate(startDate)}`,
     `DTEND:${formatIcsDate(endDate)}`,
-    `SUMMARY:${event.title}`,
-    `DESCRIPTION:${event.shortDescription || event.title}`,
-    `LOCATION:${event.venue || 'Campus'}, ${event.campusLocation || ''}`,
+    `SUMMARY:${artistName} Live at ${tour.venue}`,
+    `DESCRIPTION:${artistName} World Tour Concert at ${tour.venue}, ${tour.city}, ${tour.country}`,
+    `LOCATION:${tour.venue}, ${tour.city}, ${tour.country}`,
     'STATUS:CONFIRMED',
     'END:VEVENT',
     'END:VCALENDAR',
@@ -35,7 +33,7 @@ export function downloadCalendarEvent(event) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.setAttribute('download', `${event.id}.ics`);
+  link.setAttribute('download', `${tour.city}-${tour.id}.ics`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
