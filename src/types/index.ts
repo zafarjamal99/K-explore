@@ -2,6 +2,9 @@ export type TicketStatus = 'ON_SALE' | 'SOLD_OUT' | 'CANCELLED' | 'POSTPONED' | 
 export type MediaType = 'IMAGE' | 'VIDEO_EMBED' | 'HLS_STREAM';
 export type InquiryStatus = 'PENDING' | 'REVIEWING' | 'ACCEPTED' | 'DECLINED';
 
+export type EventDomain = 'concerts' | 'sports' | 'theater' | 'conferences';
+export type CurrencyCode = 'INR' | 'USD' | 'EUR' | 'GBP';
+
 export interface TourDate {
   id: string;
   tourId: string;
@@ -113,4 +116,110 @@ export interface ArtistProfile {
   tours: TourDate[];
   media: MediaItem[];
   posts: BlogPost[];
+}
+
+// -----------------------------------------------------------------------
+// Multi-Domain Enterprise Event & Ticketing Specifications (BookMyShow)
+// -----------------------------------------------------------------------
+
+export interface TicketTier {
+  id: string;
+  name: string;
+  price: number; // Base price in USD (converted dynamically based on selected currency)
+  description: string;
+  perks: string[];
+  capacity: number;
+  available: number;
+  color?: string;
+}
+
+export interface Seat {
+  id: string;
+  row: string;
+  number: number;
+  tierId: string;
+  price: number;
+  status: 'available' | 'selected' | 'reserved';
+}
+
+export interface DomainEvent {
+  id: string;
+  slug: string;
+  title: string;
+  domain: EventDomain;
+  category: string;
+  city: string;
+  country: string;
+  venue: string;
+  startDateTime: string;
+  doorsOpenTime?: string;
+  coverImage: string;
+  thumbnailUrl: string;
+  highlightVideoUrl?: string; // YouTube / Vimeo / HLS embed
+  galleryImages: string[];
+  description: string;
+  ageRestriction: string;
+  language: string;
+  durationFormatted: string;
+  minPrice: number;
+  maxPrice: number;
+  isFeatured?: boolean;
+  isTrending?: boolean;
+  ticketTiers: TicketTier[];
+
+  // Domain-specific polymorph extensions:
+  concertDetails?: {
+    headliner: string;
+    lineup: string[];
+    genre: string;
+    hasSoundcheck: boolean;
+    audioSampleUrl?: string;
+  };
+
+  sportsDetails?: {
+    homeTeam: string;
+    awayTeam: string;
+    tournament: string;
+    sportType: 'Cricket' | 'Football' | 'Motorsport' | 'Esports' | 'Tennis';
+    matchStatus: 'UPCOMING' | 'LIVE' | 'HALFTIME';
+    currentScore?: string;
+  };
+
+  theaterDetails?: {
+    playwright: string;
+    director: string;
+    troupe: string;
+    actsCount: number;
+    hasIntermission: boolean;
+    dressCode: string;
+  };
+
+  conferenceDetails?: {
+    keynoteSpeakers: { name: string; role: string; company: string; avatar: string }[];
+    tracks: string[];
+    breakoutRooms: number;
+    isHybrid: boolean;
+  };
+}
+
+export interface OrderBooking {
+  id: string;
+  eventId: string;
+  eventTitle: string;
+  domain: EventDomain;
+  eventDate: string;
+  venue: string;
+  city: string;
+  coverImage: string;
+  tierName: string;
+  quantity: number;
+  seats?: string[];
+  totalAmount: number;
+  currency: CurrencyCode;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  paymentMethod: string;
+  bookedAt: string;
+  qrData: string;
 }

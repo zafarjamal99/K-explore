@@ -1,9 +1,13 @@
-import { BookingInquiry, ContactSubmission, TourDate } from '../types';
+import { BookingInquiry, ContactSubmission, TourDate, OrderBooking, DomainEvent, CurrencyCode } from '../types';
+import { CURRENCY_RATES } from '../data/multiDomainData';
 
 const INQUIRIES_KEY = 'k_artist_booking_inquiries';
 const CONTACTS_KEY = 'k_artist_contact_submissions';
 const CUSTOM_TOURS_KEY = 'k_artist_custom_tour_dates';
 const REGISTRATIONS_KEY = 'k_explore_registrations';
+const BOOKINGS_KEY = 'k_explore_user_bookings';
+const CUSTOM_EVENTS_KEY = 'k_explore_custom_events';
+const CURRENCY_KEY = 'k_explore_currency';
 const THEME_KEY = 'k_explore_theme';
 
 export interface LegacyRegistration {
@@ -66,6 +70,74 @@ export function isAlreadyRegistered(eventId: string, email: string): boolean {
   return existing.some(
     (r) => r.eventId === eventId && r.email.toLowerCase() === email.toLowerCase()
   );
+}
+
+// -------------------------------------------------------------
+// Multi-Domain Bookings & Currency
+// -------------------------------------------------------------
+
+export function getStoredBookings(): OrderBooking[] {
+  try {
+    const raw = localStorage.getItem(BOOKINGS_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
+export function saveOrderBooking(data: Omit<OrderBooking, 'id' | 'bookedAt' | 'qrData'>): OrderBooking {
+  const existing = getStoredBookings();
+  const id = `BMS-2026-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+  const newBooking: OrderBooking = {
+    ...data,
+    id,
+    bookedAt: new Date().toISOString(),
+    qrData: `TICKET-AUTH:${id}-${data.customerEmail}`,
+  };
+
+  localStorage.setItem(BOOKINGS_KEY, JSON.stringify([newBooking, ...existing]));
+  return newBooking;
+}
+
+export function getStoredCurrency(): CurrencyCode {
+  try {
+    const saved = localStorage.getItem(CURRENCY_KEY) as CurrencyCode;
+    if (saved && ['INR', 'USD', 'EUR', 'GBP'].includes(saved)) return saved;
+    return 'USD';
+  } catch {
+    return 'USD';
+  }
+}
+
+export function saveStoredCurrency(currency: CurrencyCode): void {
+  try {
+    localStorage.setItem(CURRENCY_KEY, currency);
+  } catch {}
+}
+
+export function formatPrice(priceUsd: number, currency: CurrencyCode): string {
+  const meta = CURRENCY_RATES[currency] || CURRENCY_RATES.USD;
+  const converted = Math.round(priceUsd * meta.rateFromUsd);
+  if (currency === 'INR') {
+    return `${meta.symbol}${converted.toLocaleString('en-IN')}`;
+  }
+  return `${meta.symbol}${converted.toLocaleString()}`;
+}
+
+export function getCustomDomainEvents(): DomainEvent[] {
+  try {
+    const raw = localStorage.getItem(CUSTOM_EVENTS_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
+export function saveCustomDomainEvent(event: DomainEvent): void {
+  const existing = getCustomDomainEvents();
+  localStorage.setItem(CUSTOM_EVENTS_KEY, JSON.stringify([event, ...existing]));
 }
 
 // -------------------------------------------------------------

@@ -15,6 +15,7 @@ class MockIntersectionObserver {
 }
 
 window.IntersectionObserver = MockIntersectionObserver;
+window.HTMLElement.prototype.scrollIntoView = vi.fn();
 
 beforeEach(() => {
   localStorage.clear();
