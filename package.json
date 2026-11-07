@@ -1,0 +1,29 @@
+{
+  "name": "k-explore",
+  "version": "1.0.0",
+  "description": "K Explore - Premium Event Discovery and Management Platform",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "keywords": ["events", "campus", "discovery", "management", "react", "vite"],
+  "author": "K Explore Team",
+  "license": "MIT",
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "lucide-react": "^1.70.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@vitejs/plugin-react": "^6.2.1",
+    "jsdom": "^31.0.0",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  }
+}
