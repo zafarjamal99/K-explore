@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Calendar, Clock, Play, Ticket, Sparkles } from 'lucide-react';
+import { MapPin, Calendar, Clock, Play, Ticket, Sparkles, Heart } from 'lucide-react';
 import { DomainEvent, CurrencyCode } from '../types';
 import { formatPrice } from '../utils/storageUtils';
 
@@ -9,6 +9,8 @@ interface MultiDomainEventCardProps {
   onSelectEvent: (event: DomainEvent) => void;
   onQuickBook: (event: DomainEvent) => void;
   onWatchVideo?: (videoUrl: string, title: string) => void;
+  isBookmarked?: boolean;
+  onToggleBookmark?: (event: DomainEvent) => void;
 }
 
 export default function MultiDomainEventCard({
@@ -17,6 +19,8 @@ export default function MultiDomainEventCard({
   onSelectEvent,
   onQuickBook,
   onWatchVideo,
+  isBookmarked = false,
+  onToggleBookmark,
 }: MultiDomainEventCardProps) {
   const formattedDate = new Date(event.startDateTime).toLocaleDateString('en-US', {
     month: 'short',
@@ -89,6 +93,38 @@ export default function MultiDomainEventCard({
             {event.category}
           </span>
         </div>
+
+        {/* Bookmark Favorite Button */}
+        {onToggleBookmark && (
+          <button
+            type="button"
+            aria-label={isBookmarked ? `Remove ${event.title} from saved favorites` : `Save ${event.title} to favorites`}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleBookmark(event);
+            }}
+            style={{
+              position: 'absolute',
+              top: '12px',
+              right: '12px',
+              width: '34px',
+              height: '34px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(17, 19, 18, 0.75)',
+              backdropFilter: 'blur(6px)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              color: isBookmarked ? '#EF4444' : '#FFFFFF',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.18s ease',
+              zIndex: 5,
+            }}
+          >
+            <Heart size={16} fill={isBookmarked ? '#EF4444' : 'none'} />
+          </button>
+        )}
 
         {/* Video Preview Button Overlay if available */}
         {event.highlightVideoUrl && onWatchVideo && (

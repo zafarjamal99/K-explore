@@ -1,5 +1,5 @@
 import React from 'react';
-import { Music, Trophy, Theater as TheaterIcon, Briefcase, MapPin, Search, Ticket, Globe } from 'lucide-react';
+import { Music, Trophy, Theater as TheaterIcon, Briefcase, MapPin, Search, Ticket, Globe, Heart } from 'lucide-react';
 import { EventDomain, CurrencyCode } from '../types';
 import { CITIES } from '../data/multiDomainData';
 
@@ -14,6 +14,8 @@ interface DomainBarProps {
   onSearchChange: (q: string) => void;
   onOpenMyBookings: () => void;
   bookingsCount: number;
+  savedCount?: number;
+  onOpenSaved?: () => void;
 }
 
 export default function DomainBar({
@@ -27,6 +29,8 @@ export default function DomainBar({
   onSearchChange,
   onOpenMyBookings,
   bookingsCount,
+  savedCount = 0,
+  onOpenSaved,
 }: DomainBarProps) {
   const domains: { id: EventDomain; label: string; icon: React.ReactNode }[] = [
     { id: 'concerts', label: 'Concerts & Live Music', icon: <Music size={16} /> },
@@ -217,6 +221,33 @@ export default function DomainBar({
               <option value="GBP">GBP (£)</option>
             </select>
           </div>
+
+          {/* Saved Favorites Button */}
+          {onOpenSaved && (
+            <button
+              type="button"
+              onClick={onOpenSaved}
+              className="btn btn-secondary btn-sm"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                height: '42px',
+                padding: '0 14px',
+                fontSize: '0.8125rem',
+                fontWeight: 600,
+              }}
+              title="View saved and bookmarked events"
+            >
+              <Heart size={15} style={{ color: savedCount > 0 ? '#EF4444' : 'var(--color-champagne)' }} fill={savedCount > 0 ? '#EF4444' : 'none'} />
+              <span>Saved</span>
+              {savedCount > 0 && (
+                <span className="badge badge-open" style={{ padding: '1px 6px', fontSize: '0.65rem' }}>
+                  {savedCount}
+                </span>
+              )}
+            </button>
+          )}
 
           {/* My Tickets Button */}
           <button

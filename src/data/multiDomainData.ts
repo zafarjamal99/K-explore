@@ -22,6 +22,7 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
       'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=1200&q=80',
     ],
     description: 'Experience Billboard Classical Crossover #1 composer Aurelia Vance flanked by her 12-piece chamber strings and modular synthesizer guild in an immersive 360-degree spatial acoustic gala.',
     ageRestriction: '6+ Years',
@@ -136,6 +137,12 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
     doorsOpenTime: '5:30 PM',
     coverImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1600&q=85',
     thumbnailUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80',
+    highlightVideoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1520523839898-507125cd53c1?auto=format&fit=crop&w=1200&q=80',
+    ],
     description: 'An acoustic meeting of ancient Indian classical ragas with European chamber cello harmonies performed under golden lighting.',
     ageRestriction: 'All Ages',
     language: 'Hindi / English',
@@ -164,7 +171,6 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
         available: 64,
       },
     ],
-    galleryImages: [],
     concertDetails: {
       headliner: 'Pandit Ravi Sharma & Julianne Weiss',
       lineup: ['All-India Chamber Guild', 'Tabla Virtuoso Ustad Zakir Ali'],
@@ -253,6 +259,12 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
     doorsOpenTime: '12:00 PM',
     coverImage: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1600&q=85',
     thumbnailUrl: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=600&q=80',
+    highlightVideoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80',
+    ],
     description: 'Electric atmosphere under the floodlights as two global cricket superpowers battle in the deciding T20 series match.',
     ageRestriction: 'All Ages',
     language: 'Hindi / English',
@@ -261,7 +273,6 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
     maxPrice: 250,
     isFeatured: true,
     isTrending: true,
-    galleryImages: [],
     ticketTiers: [
       {
         id: 'tier-crick-stand',
@@ -312,15 +323,13 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
     doorsOpenTime: '4:00 PM',
     coverImage: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1600&q=85',
     thumbnailUrl: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=600&q=80',
+    highlightVideoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1532974297617-c0f05fe48bff?auto=format&fit=crop&w=1200&q=80',
+    ],
     description: 'Blistering speed under 1,600 floodlights along the waterfront street circuit, featuring 61 laps of high-g turn maneuvers.',
-    ageRestriction: '12+ Years',
-    language: 'English',
-    durationFormatted: '3 Days Weekend Pass',
-    minPrice: 120,
-    maxPrice: 650,
-    isFeatured: false,
-    isTrending: true,
-    galleryImages: [],
     ticketTiers: [
       {
         id: 'tier-f1-grandstand',
@@ -420,6 +429,12 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
     doorsOpenTime: '5:15 PM',
     coverImage: 'https://images.unsplash.com/photo-1469488865564-c2de10f69f96?auto=format&fit=crop&w=1600&q=85',
     thumbnailUrl: 'https://images.unsplash.com/photo-1469488865564-c2de10f69f96?auto=format&fit=crop&w=600&q=80',
+    highlightVideoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1469488865564-c2de10f69f96?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80',
+    ],
     description: 'Feroz Abbas Khan’s award-winning tribute to K. Asif’s cinematic epic, featuring Manish Malhotra costumes and 35 live Kathak dancers singing live.',
     ageRestriction: '6+ Years',
     language: 'Urdu / Hindi (English Subtitles on Screen)',
@@ -428,7 +443,6 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
     maxPrice: 160,
     isFeatured: true,
     isTrending: false,
-    galleryImages: [],
     ticketTiers: [
       {
         id: 'tier-mughal-orch',
@@ -540,6 +554,12 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
     doorsOpenTime: '8:45 AM',
     coverImage: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=1600&q=85',
     thumbnailUrl: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=600&q=80',
+    highlightVideoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80',
+    ],
     description: 'Masterclasses on typography, micro-interactions, motion curves, and ultra-premium brand architecture with leaders from Apple, Figma, and Braun.',
     ageRestriction: 'Professional',
     language: 'English / Japanese (Simultaneous Translation)',
@@ -548,7 +568,6 @@ export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
     maxPrice: 420,
     isFeatured: false,
     isTrending: false,
-    galleryImages: [],
     ticketTiers: [
       {
         id: 'tier-ux-pass',

@@ -8,7 +8,7 @@ interface MediaGalleryProps {
 }
 
 export default function MediaGallery({ media }: MediaGalleryProps) {
-  const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [filterType, setFilterType] = useState<'ALL' | 'IMAGE' | 'VIDEO'>('ALL');
 
   const filtered = media.filter((item) => {
@@ -55,24 +55,33 @@ export default function MediaGallery({ media }: MediaGalleryProps) {
         <div style={{ display: 'flex', gap: '8px' }}>
           <button
             type="button"
-            onClick={() => setFilterType('ALL')}
+            onClick={() => {
+              setFilterType('ALL');
+              setSelectedIndex(null);
+            }}
             className={`btn btn-sm ${filterType === 'ALL' ? 'btn-primary' : 'btn-secondary'}`}
           >
-            All Media
+            All Media ({media.length})
           </button>
           <button
             type="button"
-            onClick={() => setFilterType('IMAGE')}
+            onClick={() => {
+              setFilterType('IMAGE');
+              setSelectedIndex(null);
+            }}
             className={`btn btn-sm ${filterType === 'IMAGE' ? 'btn-primary' : 'btn-secondary'}`}
           >
-            Photography
+            Photography ({media.filter((m) => m.type === 'IMAGE').length})
           </button>
           <button
             type="button"
-            onClick={() => setFilterType('VIDEO')}
+            onClick={() => {
+              setFilterType('VIDEO');
+              setSelectedIndex(null);
+            }}
             className={`btn btn-sm ${filterType === 'VIDEO' ? 'btn-primary' : 'btn-secondary'}`}
           >
-            Concert Films
+            Concert Films ({media.filter((m) => m.type === 'VIDEO_EMBED').length})
           </button>
         </div>
       </div>
@@ -85,10 +94,10 @@ export default function MediaGallery({ media }: MediaGalleryProps) {
           gap: '20px',
         }}
       >
-        {filtered.map((item) => (
+        {filtered.map((item, idx) => (
           <div
             key={item.id}
-            onClick={() => setSelectedMedia(item)}
+            onClick={() => setSelectedIndex(idx)}
             style={{
               position: 'relative',
               height: '240px',
@@ -170,8 +179,14 @@ export default function MediaGallery({ media }: MediaGalleryProps) {
       </div>
 
       {/* Lightbox Modal */}
-      {selectedMedia && (
-        <LightboxModal item={selectedMedia} onClose={() => setSelectedMedia(null)} />
+      {selectedIndex !== null && filtered[selectedIndex] && (
+        <LightboxModal
+          item={filtered[selectedIndex]}
+          items={filtered}
+          currentIndex={selectedIndex}
+          onNavigate={(newIdx) => setSelectedIndex(newIdx)}
+          onClose={() => setSelectedIndex(null)}
+        />
       )}
     </section>
   );

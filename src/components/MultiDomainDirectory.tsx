@@ -9,6 +9,7 @@ import {
   ArrowUpDown,
   X,
   Play,
+  Heart,
 } from 'lucide-react';
 import { DomainEvent, EventDomain, CurrencyCode, TicketTier } from '../types';
 import MultiDomainEventCard from './MultiDomainEventCard';
@@ -24,6 +25,8 @@ interface MultiDomainDirectoryProps {
   searchQuery: string;
   showToast: (msg: string, type?: 'success' | 'error' | 'info') => void;
   onBookingComplete: () => void;
+  favorites?: string[];
+  onToggleBookmark?: (event: DomainEvent) => void;
 }
 
 export default function MultiDomainDirectory({
@@ -34,9 +37,12 @@ export default function MultiDomainDirectory({
   searchQuery,
   showToast,
   onBookingComplete,
+  favorites = [],
+  onToggleBookmark,
 }: MultiDomainDirectoryProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [sortBy, setSortBy] = useState<'popular' | 'date' | 'price-asc' | 'price-desc'>('popular');
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
   // Modals state
   const [inspectingEvent, setInspectingEvent] = useState<DomainEvent | null>(null);
@@ -87,6 +93,11 @@ export default function MultiDomainDirectory({
       );
     }
 
+    // Favorites Filter
+    if (showFavoritesOnly) {
+      result = result.filter((e) => favorites.includes(e.id));
+    }
+
     // Sorting
     result.sort((a, b) => {
       if (sortBy === 'price-asc') return a.minPrice - b.minPrice;
@@ -96,7 +107,7 @@ export default function MultiDomainDirectory({
     });
 
     return result;
-  }, [domainEvents, selectedCity, selectedCategory, searchQuery, sortBy]);
+  }, [domainEvents, selectedCity, selectedCategory, searchQuery, sortBy, showFavoritesOnly, favorites]);
 
   const domainDescriptions: Record<EventDomain, { title: string; subtitle: string; icon: React.ReactNode }> = {
     concerts: {
@@ -185,7 +196,7 @@ export default function MultiDomainDirectory({
         </div>
       </div>
 
-      {/* Subcategory Pills */}
+      {/* Subcategory Pills & Favorites Toggle */}
       <div
         style={{
           display: 'flex',
@@ -198,13 +209,26 @@ export default function MultiDomainDirectory({
           <button
             key={cat}
             type="button"
-            onClick={() => setSelectedCategory(cat)}
-            className={`btn btn-sm ${selectedCategory === cat ? 'btn-primary' : 'btn-secondary'}`}
-            style={{ fontSize: '0.8125rem', fontWeight: selectedCategory === cat ? 600 : 500 }}
+            onClick={() => {
+              setSelectedCategory(cat);
+              setShowFavoritesOnly(false);
+            }}
+            className={`btn btn-sm ${!showFavoritesOnly && selectedCategory === cat ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ fontSize: '0.8125rem', fontWeight: !showFavoritesOnly && selectedCategory === cat ? 600 : 500 }}
           >
             {cat}
           </button>
         ))}
+
+        <button
+          type="button"
+          onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+          className={`btn btn-sm ${showFavoritesOnly ? 'btn-champagne' : 'btn-secondary'}`}
+          style={{ fontSize: '0.8125rem', fontWeight: showFavoritesOnly ? 700 : 500, display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+        >
+          <Heart size={13} fill={showFavoritesOnly ? '#EF4444' : 'none'} color={showFavoritesOnly ? '#EF4444' : 'currentColor'} />
+          <span>Saved ({favorites.filter((id) => domainEvents.some((e) => e.id === id)).length})</span>
+        </button>
       </div>
 
       {/* Events Grid */}
@@ -249,6 +273,8 @@ export default function MultiDomainDirectory({
               onSelectEvent={(ev) => setInspectingEvent(ev)}
               onQuickBook={(ev) => setBookingEvent(ev)}
               onWatchVideo={(url, title) => setVideoModal({ url, title })}
+              isBookmarked={favorites.includes(event.id)}
+              onToggleBookmark={onToggleBookmark}
             />
           ))}
         </div>
@@ -312,7 +338,7 @@ export default function MultiDomainDirectory({
             alignItems: 'center',
             justifyContent: 'center',
             padding: '16px',
-            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            backgroundColor: 'var(--modal-overlay)',
             backdropFilter: 'blur(10px)',
           }}
           onClick={(e) => {

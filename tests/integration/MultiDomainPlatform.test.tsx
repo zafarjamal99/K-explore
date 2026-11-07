@@ -129,4 +129,22 @@ describe('K Explore Multi-Domain Platform Integration Suite', () => {
       expect(screen.getByText(/My Tickets & Bookings/i)).toBeInTheDocument();
     });
   });
+
+  it('bookmarks an event and filters saved favorites', async () => {
+    render(<App />);
+
+    // Click bookmark heart button on the first card
+    const bookmarkButtons = screen.getAllByRole('button', { name: /Save .* to favorites/i });
+    expect(bookmarkButtons.length).toBeGreaterThan(0);
+    fireEvent.click(bookmarkButtons[0]);
+
+    // Open Saved drawer from domain bar
+    const savedBtn = screen.getByTitle('View saved and bookmarked events');
+    fireEvent.click(savedBtn);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      expect(screen.getByText(/Saved Favorites/i)).toBeInTheDocument();
+    });
+  });
 });

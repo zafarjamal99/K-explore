@@ -16,12 +16,15 @@ import Footer from './components/Footer';
 import TicketRsvpModal from './components/TicketRsvpModal';
 import AdminDashboard from './components/AdminDashboard';
 import Toast from './components/Toast';
+import ScrollProgressBar from './components/ScrollProgressBar';
 
 import { ARTIST_PROFILE } from './data/artistData';
 import { MULTI_DOMAIN_EVENTS } from './data/multiDomainData';
 import { TourDate, BookingInquiry, EventDomain, CurrencyCode, OrderBooking, DomainEvent } from './types';
 import { useTheme } from './hooks/useTheme';
 import { useScrollReveal } from './hooks/useScrollReveal';
+import { useDebounce } from './hooks/useDebounce';
+import { useFavorites } from './hooks/useFavorites';
 import {
   getCustomTourDates,
   getStoredInquiries,
@@ -33,13 +36,16 @@ import {
 
 export default function App() {
   const { theme, toggleTheme } = useTheme();
+  const { favorites, toggleFavorite, count: favoritesCount } = useFavorites();
 
   // Multi-Domain Navigation State
   const [activeDomain, setActiveDomain] = useState<EventDomain>('concerts');
   const [selectedCity, setSelectedCity] = useState<string>('All Cities');
   const [currency, setCurrency] = useState<CurrencyCode>(() => getStoredCurrency());
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const debouncedSearchQuery = useDebounce(searchQuery, 250);
   const [isMyBookingsOpen, setIsMyBookingsOpen] = useState(false);
+  const [drawerTab, setDrawerTab] = useState<'bookings' | 'saved'>('bookings');
   const [bookings, setBookings] = useState<OrderBooking[]>(() => getStoredBookings());
 
   // Dialog & Modal states
@@ -150,6 +156,9 @@ export default function App() {
 
   return (
     <div className="app-shell" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Top Reading & Scroll Progress Indicator */}
+      <ScrollProgressBar />
+
       {/* Top Main Navbar */}
       <Navbar
         theme={theme}
@@ -183,8 +192,16 @@ export default function App() {
           onSelectCurrency={handleCurrencyChange}
           searchQuery={searchQuery}
           onSearchChange={(q) => setSearchQuery(q)}
-          onOpenMyBookings={() => setIsMyBookingsOpen(true)}
+          onOpenMyBookings={() => {
+            setDrawerTab('bookings');
+            setIsMyBookingsOpen(true);
+          }}
           bookingsCount={bookings.length}
+          savedCount={favoritesCount}
+          onOpenSaved={() => {
+            setDrawerTab('saved');
+            setIsMyBookingsOpen(true);
+          }}
         />
 
         {/* 4. Multi-Domain Event Directory Grid */}
@@ -193,9 +210,17 @@ export default function App() {
           activeDomain={activeDomain}
           selectedCity={selectedCity}
           currency={currency}
-          searchQuery={searchQuery}
+          searchQuery={debouncedSearchQuery}
           showToast={showToast}
           onBookingComplete={handleBookingComplete}
+          favorites={favorites}
+          onToggleBookmark={(ev) => {
+            const isNowSaved = toggleFavorite(ev.id);
+            showToast(
+              isNowSaved ? `Added "${ev.title}" to saved favorites.` : `Removed from favorites.`,
+              'info'
+            );
+          }}
         />
 
         {/* 5. Deep-Dive Recorded Works & Tour Schedule */}
@@ -254,13 +279,23 @@ export default function App() {
         />
       )}
 
-      {/* My Tickets Drawer */}
+      {/* My Tickets & Saved Favorites Drawer */}
       <UserAccountDrawer
         isOpen={isMyBookingsOpen}
         onClose={() => setIsMyBookingsOpen(false)}
         bookings={bookings}
         currency={currency}
         onExploreEvents={() => scrollToSection('multi-domain-directory')}
+        savedEvents={allDomainEvents.filter((e) => favorites.includes(e.id))}
+        onRemoveFavorite={(id) => {
+          toggleFavorite(id);
+          showToast('Removed from favorites.', 'info');
+        }}
+        onSelectEvent={(ev) => {
+          setActiveDomain(ev.domain);
+          scrollToSection('multi-domain-directory');
+        }}
+        initialTab={drawerTab}
       />
 
       {/* Toast Feedbacks */}
