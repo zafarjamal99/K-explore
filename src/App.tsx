@@ -34,7 +34,7 @@ import {
 export default function App() {
   const { theme, toggleTheme } = useTheme();
 
-  // Multi-Domain BookMyShow Navigation State
+  // Multi-Domain Navigation State
   const [activeDomain, setActiveDomain] = useState<EventDomain>('concerts');
   const [selectedCity, setSelectedCity] = useState<string>('All Cities');
   const [currency, setCurrency] = useState<CurrencyCode>(() => getStoredCurrency());
@@ -158,26 +158,36 @@ export default function App() {
         pendingInquiriesCount={inquiriesCount}
       />
 
-      {/* BookMyShow Domain Bar & Universal Filter Ribbon */}
-      <DomainBar
-        activeDomain={activeDomain}
-        onSelectDomain={(d) => {
-          setActiveDomain(d);
-          scrollToSection('multi-domain-directory');
-        }}
-        selectedCity={selectedCity}
-        onSelectCity={(c) => setSelectedCity(c)}
-        currency={currency}
-        onSelectCurrency={handleCurrencyChange}
-        searchQuery={searchQuery}
-        onSearchChange={(q) => setSearchQuery(q)}
-        onOpenMyBookings={() => setIsMyBookingsOpen(true)}
-        bookingsCount={bookings.length}
-      />
-
       {/* Main Content Layout */}
       <main id="main-content" className="container" style={{ flex: 1, paddingBottom: '32px' }}>
-        {/* BookMyShow Multi-Domain Event Directory */}
+        {/* 1. Hero Section */}
+        <Hero
+          artist={ARTIST_PROFILE}
+          onExploreTour={() => scrollToSection('tour-dates')}
+          onListenMusic={() => scrollToSection('discography')}
+        />
+
+        {/* 2. Artist Story & Biography: "Where classical rigor dissolves into modular transcendence." */}
+        <ArtistBio artist={ARTIST_PROFILE} />
+
+        {/* 3. RIGHT AFTER "Where classical rigor dissolves into modular transcendence." block: */}
+        {/* Domain Options (Concerts, Sports, Theater, Conferences) & Universal Search */}
+        <DomainBar
+          activeDomain={activeDomain}
+          onSelectDomain={(d) => {
+            setActiveDomain(d);
+          }}
+          selectedCity={selectedCity}
+          onSelectCity={(c) => setSelectedCity(c)}
+          currency={currency}
+          onSelectCurrency={handleCurrencyChange}
+          searchQuery={searchQuery}
+          onSearchChange={(q) => setSearchQuery(q)}
+          onOpenMyBookings={() => setIsMyBookingsOpen(true)}
+          bookingsCount={bookings.length}
+        />
+
+        {/* 4. Multi-Domain Event Directory Grid */}
         <MultiDomainDirectory
           events={allDomainEvents}
           activeDomain={activeDomain}
@@ -188,47 +198,32 @@ export default function App() {
           onBookingComplete={handleBookingComplete}
         />
 
-        {/* Flagship Concerts & World Tour Experience */}
-        {activeDomain === 'concerts' && (
-          <div style={{ marginTop: '32px' }}>
-            {/* Hero Section */}
-            <Hero
-              artist={ARTIST_PROFILE}
-              onExploreTour={() => scrollToSection('tour-dates')}
-              onListenMusic={() => scrollToSection('discography')}
-            />
+        {/* 5. Deep-Dive Recorded Works & Tour Schedule */}
+        <Discography albums={ARTIST_PROFILE.albums} />
 
-            {/* Artist Story & Ensemble Specs */}
-            <ArtistBio artist={ARTIST_PROFILE} />
+        {/* Tour Calendar & RSVP Pass */}
+        <TourCalendar
+          dates={allTourDates}
+          artistName={ARTIST_PROFILE.name}
+          onSelectTicketRsvp={(tour) => setTicketRsvpTour(tour)}
+          showToast={showToast}
+        />
 
-            {/* Discography & Audio Previews */}
-            <Discography albums={ARTIST_PROFILE.albums} />
+        {/* Live Broadcast Player & Real-Time Chat */}
+        <LiveVideoPlayer />
 
-            {/* Tour Calendar & RSVP */}
-            <TourCalendar
-              dates={allTourDates}
-              artistName={ARTIST_PROFILE.name}
-              onSelectTicketRsvp={(tour) => setTicketRsvpTour(tour)}
-              showToast={showToast}
-            />
+        {/* High-Resolution Media Gallery */}
+        <MediaGallery media={ARTIST_PROFILE.media} />
 
-            {/* Live Broadcast Player & Real-Time Chat */}
-            <LiveVideoPlayer />
+        {/* News & Editorial Dispatches */}
+        <BlogSection posts={ARTIST_PROFILE.posts} showToast={showToast} />
 
-            {/* High-Resolution Media Gallery */}
-            <MediaGallery media={ARTIST_PROFILE.media} />
-
-            {/* News & Editorial Dispatches */}
-            <BlogSection posts={ARTIST_PROFILE.posts} showToast={showToast} />
-
-            {/* Promoter Tour Booking Inquiry Portal */}
-            <BookingForm
-              artistName={ARTIST_PROFILE.name}
-              showToast={showToast}
-              onInquiryCreated={handleInquiryCreated}
-            />
-          </div>
-        )}
+        {/* Promoter Tour Booking Inquiry Portal */}
+        <BookingForm
+          artistName={ARTIST_PROFILE.name}
+          showToast={showToast}
+          onInquiryCreated={handleInquiryCreated}
+        />
 
         {/* General, Press & Licensing Contact */}
         <ContactForm showToast={showToast} />
@@ -259,7 +254,7 @@ export default function App() {
         />
       )}
 
-      {/* BookMyShow My Tickets Drawer */}
+      {/* My Tickets Drawer */}
       <UserAccountDrawer
         isOpen={isMyBookingsOpen}
         onClose={() => setIsMyBookingsOpen(false)}

@@ -101,7 +101,7 @@ export default function MultiDomainDirectory({
   const domainDescriptions: Record<EventDomain, { title: string; subtitle: string; icon: React.ReactNode }> = {
     concerts: {
       title: 'Concerts, Arena Tours & Classical Galas',
-      subtitle: 'Official BookMyShow-style concert discovery. Explore world-class stadium tours, intimate jazz lounges, and orchestral acoustics.',
+      subtitle: 'Official K Explore live concert discovery. Explore world-class stadium tours, intimate jazz lounges, and orchestral acoustics.',
       icon: <Music size={22} style={{ color: 'var(--color-champagne)' }} />,
     },
     sports: {
@@ -148,7 +148,7 @@ export default function MultiDomainDirectory({
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
             {currentDomainMeta.icon}
             <span className="eyebrow" style={{ margin: 0, textTransform: 'uppercase' }}>
-              BOOKMYSHOW MULTI-DOMAIN PLATFORM &middot; {activeDomain}
+              K EXPLORE &middot; LIVE EXPERIENCES &middot; {activeDomain}
             </span>
           </div>
           <h2 id="domain-section-title" style={{ margin: '2px 0 8px 0', fontSize: '1.9rem' }}>

@@ -100,7 +100,7 @@ export default function SeatAndTierSelectorModal({
         >
           <div>
             <span className="eyebrow" style={{ color: 'var(--color-champagne)' }}>
-              BOOKMYSHOW VISUAL SEAT SELECTION
+              K EXPLORE VISUAL SEAT SELECTION
             </span>
             <h3 id="seat-selector-title" style={{ margin: '2px 0 0 0', fontSize: '1.25rem' }}>
               {event.title}

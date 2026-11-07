@@ -119,7 +119,7 @@ export interface ArtistProfile {
 }
 
 // -----------------------------------------------------------------------
-// Multi-Domain Enterprise Event & Ticketing Specifications (BookMyShow)
+// Multi-Domain Enterprise Event & Ticketing Specifications (K Explore)
 // -----------------------------------------------------------------------
 
 export interface TicketTier {

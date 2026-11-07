@@ -148,7 +148,7 @@ export default function MultiStepCheckoutModal({
         >
           <div>
             <span className="eyebrow" style={{ color: 'var(--color-champagne)' }}>
-              BOOKMYSHOW SECURE CHECKOUT &middot; STEP {step === 'details' ? '1/2' : step === 'payment' ? '2/2' : 'CONFIRMED'}
+              K EXPLORE SECURE CHECKOUT &middot; STEP {step === 'details' ? '1/2' : step === 'payment' ? '2/2' : 'CONFIRMED'}
             </span>
             <h3 id="checkout-modal-title" style={{ margin: '2px 0 0 0', fontSize: '1.25rem' }}>
               {step === 'confirmation' ? 'Booking Confirmed' : 'Instant Checkout'}
@@ -366,7 +366,7 @@ export default function MultiStepCheckoutModal({
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--color-border)', paddingBottom: '14px', marginBottom: '14px' }}>
                   <div>
                     <span className="eyebrow" style={{ color: 'var(--color-champagne)' }}>
-                      BOOKMYSHOW VERIFIED DIGITAL ENTRY
+                      K EXPLORE VERIFIED DIGITAL ENTRY
                     </span>
                     <h4 style={{ margin: '2px 0 0 0', fontSize: '1.2rem', fontFamily: 'var(--font-display)' }}>
                       {confirmedBooking.eventTitle}

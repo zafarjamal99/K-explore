@@ -8,7 +8,7 @@ vi.mock('canvas-confetti', () => ({
   default: vi.fn(),
 }));
 
-describe('BookMyShow Multi-Domain Platform Integration Suite', () => {
+describe('K Explore Multi-Domain Platform Integration Suite', () => {
   beforeEach(() => {
     localStorage.clear();
   });
@@ -86,7 +86,7 @@ describe('BookMyShow Multi-Domain Platform Integration Suite', () => {
     // Visual Seat Selector Modal opens
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
-      expect(screen.getByText(/BOOKMYSHOW VISUAL SEAT SELECTION/i)).toBeInTheDocument();
+      expect(screen.getByText(/K EXPLORE VISUAL SEAT SELECTION/i)).toBeInTheDocument();
     });
 
     // Click Proceed to Attendee Details
@@ -95,7 +95,7 @@ describe('BookMyShow Multi-Domain Platform Integration Suite', () => {
 
     // Multi-Step Checkout Modal opens
     await waitFor(() => {
-      expect(screen.getByText(/BOOKMYSHOW SECURE CHECKOUT/i)).toBeInTheDocument();
+      expect(screen.getByText(/K EXPLORE SECURE CHECKOUT/i)).toBeInTheDocument();
     });
 
     // Step 1: Attendee Info
@@ -112,7 +112,7 @@ describe('BookMyShow Multi-Domain Platform Integration Suite', () => {
 
     // Step 3: Verified Digital Booking Pass
     await waitFor(() => {
-      expect(screen.getByText(/BOOKMYSHOW VERIFIED DIGITAL ENTRY/i)).toBeInTheDocument();
+      expect(screen.getByText(/K EXPLORE VERIFIED DIGITAL ENTRY/i)).toBeInTheDocument();
       expect(screen.getByText(/SCAN AT GATE TURNSTILE/i)).toBeInTheDocument();
     });
   });

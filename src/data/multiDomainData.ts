@@ -2,7 +2,7 @@ import { DomainEvent } from '../types';
 
 export const MULTI_DOMAIN_EVENTS: DomainEvent[] = [
   // =========================================================================
-  // 1. CONCERTS & LIVE MUSIC (BOOKMYSHOW FLAGSHIP DOMAIN)
+  // 1. CONCERTS & LIVE MUSIC (K EXPLORE FLAGSHIP DOMAIN)
   // =========================================================================
   {
     id: 'cn-solstice-tour',
